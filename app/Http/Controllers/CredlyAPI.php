@@ -12,13 +12,13 @@ class CredlyAPI extends Controller {
 		//Getting params:
 		//Request::input('argument1')
 
-		//TODO Get from client, put in cookie
-		//$token = $this->authenticate('junk1@zioth.com', 'greycoat');
 
 //Request::all()
 		$args = array();
-		array_push($args, 'access_token=' . $token);
-		array_push($args, 'include_authorized=0');
+		//TODO Get from client, put in cookie
+		//$token = $this->authenticate('junk1@zioth.com', 'greycoat');
+		//array_push($args, 'access_token=' . $token);
+		//array_push($args, 'include_authorized=0');
 		$data = $this->getData($action, join('&', $args), 'GET');
 
 		//$msg = "This is a simple message.";
