@@ -55,7 +55,7 @@
 				<!-- <input type="text" name="username" placeholder="Email address"/>
 				<input type="password" name="password" placeholder="*****"/>
 				<div class="button" onclick="badgesController.signIn()">Sign In</div> -->
-				<form name="form" ng-submit="vm.login(); return false" role="form">
+				<form name="form" ng-submit="vm.login()" role="form">
 					<div class="form-group">
 						<label for="username">Username</label>
 						<input type="text" name="username" id="username" class="form-control" ng-model="badgesController.username" required />
