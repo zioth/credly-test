@@ -22,6 +22,7 @@ const app = new Vue({
 */
 (function() {
 'use strict';
+	console.error('start');
 
 angular.module('CredlyDisplayer', [
 		'ngAnimate'
