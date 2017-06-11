@@ -1,4 +1,3 @@
-
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -21,14 +20,15 @@ const app = new Vue({
 	el: '#app'
 });
 */
+(function() {
 'use strict';
 
 angular.module('CredlyDisplayer', [
 		'ngAnimate'
 	], function(interpolateProvider) {
 		// Remove the conflict with Laravel -- both use double-curly-brackets for interpolation.
-		interpolateProvider.startSymbol('{%');
-		interpolateProvider.endSymbol('%}');
+		//interpolateProvider.startSymbol('{%');
+		//interpolateProvider.endSymbol('%}');
 	})
 	.value('BROADCAST_SPEED', 1000)
 	.value('SCROLL_LIMIT', 1000)
@@ -299,3 +299,4 @@ vm.moo = 'MOOOOOOOOO!';
 		vm.badges = [];
 		vm.getBadges();
 	}]);
+})();
