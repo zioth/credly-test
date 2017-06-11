@@ -32,38 +32,43 @@
 			}
 			.member_box {
 				position: relative;
+				float: left;
 				display: block;
 				height: 170px;
 				width: 170px;
 				border: 2px solid black;
 				border-radius: 4px;
 				background-color: #AAA;
+				margin: 12px;
+				overflow: hidden;
 			}
-			.avatar {
+			.member_box .avatar {
 				display: block;
-				height: 100%;
-				width: 100%;
-				border: 2px solid black;
-				border-radius: 4px;
+				height: 170px;
+				width: 170px;
 			}
-			.avatar.non_member {
+			.member_box .avatar.non_member {
 				/* TODO: Default avatar */
 			}
+			.member_overlay {
+				position: absolute;
+				height: 24px;
+				width: 100%;
+				background-color: rgba(0, 0, 0, .5);
+				overflow: hidden;
+				color: #FFF;
+			}
+			.member_box .display_name {
+				top: 0;
+			}
+
 			.main-wrapper:not(.loggedIn),
 			.login-form.loggedIn {
 				display: none;
 			}
 
 			.member_badges {
-				position: absolute;
 				bottom: 0;
-				height: 24px;
-				width: 100%;
-				background-color: rgba(0, 0, 0, .5);
-				overflow: hidden;
-			}
-			.member_badges .show_badges {
-				color: #FFF;
 			}
 			.member_badges .badges .badge {
 				height: 18px;
@@ -144,15 +149,15 @@
 							<div ng-switch on="contact.is_member" >
 								<div ng-switch-when="true">
 									<img class="avatar" ng-src="{{ contact.member.avatar }}"/>
-									<div>{{ contact.member.display_name }}</div>
+									<div class="display_name member_overlay">{{ contact.member.display_name }}</div>
 								</div>
 								<div ng-switch-default>
 									<div class="avatar non_member"></div>
-									<div>{{ contact.first_name }} {{ contact.last_name }}</div>
+									<div class="display_name member_overlay">{{ contact.first_name }} {{ contact.last_name }}</div>
 								</div>
 							</div>
 
-							<div ng-switch on="contact.loadedBadges" class="member_badges">
+							<div ng-switch on="contact.loadedBadges" class="member_badges member_overlay">
 								<div ng-switch-when="true" class="show_badges" ng-click="badgesController.showBadges(contact.id)">
 									Show Badges
 								</div>
