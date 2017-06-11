@@ -21,8 +21,7 @@ class AjaxController extends Controller {
 
 		//$msg = "This is a simple message.";
 		return response()
-			->withHeader('Content-Type', 'application/json')
-			->withJson($data);
+			->json($data);
 			//->json(array('msg'=> $msg), 200);
 	   }
 
