@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function () {
-	return view('welcome');
+	return view('mainapp');
 });
 
 Route::get('/badges', function(App\Http\Controllers\CredlyAPI $api) {
