@@ -83,7 +83,9 @@ angular.module('CredlyDisplayer', ['ngAnimate'])
 					if (res.data.data) {
 						vm.badges = vm.badges.concat(res.data.data);
 					}
-					$scope.noMore = vm.badges.length >= res.data.paging.total_results;
+					if (res.data && res.data.paging) {
+						$scope.noMore = vm.badges.length >= res.data.paging.total_results;
+					}
 				},
 				function(err) {
 					vm.isLoading = false;
@@ -104,7 +106,9 @@ angular.module('CredlyDisplayer', ['ngAnimate'])
 					if (res.data.data) {
 						vm.contacts = vm.contacts.concat(res.data.data);
 					}
-					$scope.noMore = vm.contacts.length >= res.data.paging.total_results;
+					if (res.data && res.data.paging) {
+						$scope.noMore = vm.contacts.length >= res.data.paging.total_results;
+					}
 				},
 				function(err) {
 					vm.isLoading = false;
@@ -115,7 +119,7 @@ angular.module('CredlyDisplayer', ['ngAnimate'])
 		vm.isLoggedIn = true; // innocent until proven guilty
 		vm.username = '';
 		vm.password = '';
-		vm.login = function() {
+		$scope.login = function() {
 			console.error('moo');
 		};
 
