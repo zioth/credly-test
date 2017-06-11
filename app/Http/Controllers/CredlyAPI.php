@@ -11,7 +11,7 @@ use App\Http\Controllers\Controller;
 //TODO: Don't allow arbitrary actions -- maybe some need more security?
 class CredlyAPI extends Controller {
 	public function index($action) {
-		$args = Request.all();
+		$args = Request::all();
 		// From authentication. If the cookie is missing or the token is expired, the client will handle the error and present a login page.
 		// TODO: Optimize: If there's no cookie, many requests will fail.
 		array_push($args, 'access_token=' . Cookie::get('credly_token'));
