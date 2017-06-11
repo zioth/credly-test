@@ -16,10 +16,10 @@ Route::get('/', function () {
 });
 
 Route::get('/badges', function(App\Http\Controllers\CredlyAPI $api) {
-	return $api->index('me/badges/created');
+	return $api->proxy('me/badges/created');
 });
 Route::get('/contacts', function(App\Http\Controllers\CredlyAPI $api) {
-	return $api->index('me/contacts');
+	return $api->proxy('me/contacts');
 });
 
 Route::post('/authenticate', function(App\Http\Controllers\CredlyAPI $api) {
