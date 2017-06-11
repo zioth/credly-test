@@ -117,5 +117,7 @@ angular.module('CredlyDisplayer', ['ngAnimate'])
 		vm.contacts = [];
 		vm.getBadges();
 		vm.getContacts();
+		//TODO DEBUG:
+		window._DEBUGTEST = vm;
 	}]);
 })();

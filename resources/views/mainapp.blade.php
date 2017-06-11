@@ -107,19 +107,17 @@
 			</div>
 		@endverbatim
 
-		<div class="flex-center position-ref full-height">
-			<!-- TODO Authentication -->
-			@if (Route::has('login'))
-				<div class="top-right links">
-					@if (Auth::check())
-						<a href="{{ url('/home') }}">Home</a>
-					@else
-						<a href="{{ url('/login') }}">Login</a>
-						<a href="{{ url('/register') }}">Register</a>
-					@endif
-				</div>
-			@endif
-		</div>
+		<!-- TODO Authentication -->
+		@if (Route::has('login'))
+			<div class="top-right links">
+				@if (Auth::check())
+					<a href="{{ url('/home') }}">Home</a>
+				@else
+					<a href="{{ url('/login') }}">Login</a>
+					<a href="{{ url('/register') }}">Register</a>
+				@endif
+			</div>
+		@endif
 
 		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
 		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-animate.min.js"></script>

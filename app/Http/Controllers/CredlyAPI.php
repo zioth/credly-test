@@ -13,7 +13,7 @@ class CredlyAPI extends Controller {
 		//Request::input('argument1')
 
 		//TODO Get from client, put in cookie
-		$token = $this->authenticate('junk1@zioth.com', 'greycoat');
+		//$token = $this->authenticate('junk1@zioth.com', 'greycoat');
 
 //Request::all()
 		$args = array();
@@ -42,8 +42,8 @@ class CredlyAPI extends Controller {
 			CURLOPT_CUSTOMREQUEST => 'POST',
 			CURLOPT_HTTPHEADER => [
 				// TODO: Don't put these in source control.
-				'x-api-key: c6b764f37bc6755a176eceb524854298',
-				'x-api-secret: pUiQ2r0W3aCvoNlDeOB882j5ARW2KSqYIm7naLMEFCYVG4hkvCVIVHPVhSb5PMBTUX9x4yPefH2apwYlTfdApnDGzq0pmh5x4d37mH11a0XV6qGLSIfI/H85HYK62E4L5H60WKQfIBAiIJQdICnXT2sCHkWkX9p3ZbarDllV/9o='
+				'x-api-key: ' . env('CREDLY_API_KEY'),
+				'x-api-secret: ' . env('CREDLY_API_SECRET')
 			]
 		]);
 
