@@ -16,7 +16,7 @@
 		@verbatim
 			<div class="main-wrapper container">
 				<div
-					class="row badges-main-wrapper"
+					class="badges_column"
 					infinite-scroll
 					event-name="loadMoreBadges"
 					ng-class="{'loading': badgesController.isLoading}"
@@ -45,6 +45,21 @@
 						  repeatCount="indefinite"/>
 						</path>
 					  </svg>
+					</div>
+				</div>
+
+				<div
+					class="contacts_column"
+					event-name="loadMoreContacts"
+					ng-class="{'loading': badgesController.isLoading}"
+					>
+					<div
+						class="member-image"
+						ng-repeat="contact in badgesController.contacts"
+						data-memberid="{{ contact.contact_member_id }}"
+						data-id="{{ contact.id }}"
+					   >
+						<div>{{ contact.first_name }} {{ contact.last_name }}</div>
 					</div>
 				</div>
 			</div>
