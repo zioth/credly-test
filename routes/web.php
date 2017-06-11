@@ -21,3 +21,7 @@ Route::get('/badges', function(App\Http\Controllers\CredlyAPI $api) {
 Route::get('/contacts', function(App\Http\Controllers\CredlyAPI $api) {
 	return $api->index('me/contacts');
 });
+
+Route::get('/authenticate', function(App\Http\Controllers\CredlyAPI $api) {
+	return $api->authenticate();
+});

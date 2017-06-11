@@ -59,7 +59,19 @@ angular.module('CredlyDisplayer', ['ngAnimate'])
 			}
 		}
 	}])
-	.controller('BadgesController', ['$scope', 'Badges', 'Contacts', function($scope, Badges, Contacts) {
+	.factory('LogIn',  ['$http', function($http) {
+		var vm = this;
+		return {
+			get: function() {
+				return $http({
+					method: 'POST',
+					url: '/authenticate',
+					params: {username: vm.username, password: vm.password}
+				});
+			}
+		}
+	}])
+	.controller('BadgesController', ['$scope', 'Badges', 'Contacts', 'LogIn', function($scope, Badges, Contacts, LogIn) {
 		var vm = this;
 		var page = 1;
 
@@ -116,18 +128,40 @@ angular.module('CredlyDisplayer', ['ngAnimate'])
 			);
 		};
 
-		vm.isLoggedIn = true; // innocent until proven guilty
-		vm.username = '';
-		vm.password = '';
 		$scope.login = function() {
-			console.error('moo');
+			LogIn.get().then(function(res) {
+console.error(res);
+				if (res.isLoggedIn) {
+					_init();
+				}
+				else {
+					vm.isLoggedIn = false;
+					vm.loginFailed = true;
+				}
+			}, function(err) {
+				vm.isLoggedIn = false;
+				vm.loginFailed = true;
+			});
 		};
 
-		vm.isLoading = false;
-		vm.badges = [];
-		vm.contacts = [];
-		vm.getBadges();
-		vm.getContacts();
+
+		/**
+		 * Initialize data, and fetch JSON to render UI.
+		 */
+		function _init() {
+			vm.isLoggedIn = true; // innocent until proven guilty.
+			vm.loginFailed = false; // The last login attempt failed.
+			vm.username = '';
+			vm.password = '';
+			vm.isLoading = false;
+			vm.badges = [];
+			vm.contacts = [];
+			vm.getBadges();
+			vm.getContacts();
+		}
+
+		_init();
+
 		//TODO DEBUG:
 		window._DEBUGTEST = vm;
 	}]);

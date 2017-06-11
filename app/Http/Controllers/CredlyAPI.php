@@ -4,6 +4,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+//TODO: Auto-detect method
+//TODO: Don't allow arbitrary actions -- maybe some need more security?
 class CredlyAPI extends Controller {
 	public function index($action) {
 		//http_build_query($_GET)
@@ -26,10 +28,44 @@ class CredlyAPI extends Controller {
 			//->json(array('msg'=> $msg), 200);
 	}
 
+	public function authenticate() {
+		$curl = curl_init();
 
-	//TODO: Auto-detect method
-	//TODO: Don't allow arbitrary actions -- maybe some need more security?
-	public function authenticate($username, $password) {
+		curl_setopt_array($curl, [
+			CURLOPT_URL => "https://api.credly.com/v1.1/authenticate",
+			CURLOPT_RETURNTRANSFER => true,
+			CURLOPT_ENCODING => '',
+			CURLOPT_MAXREDIRS => 10,
+			CURLOPT_TIMEOUT => 30,
+			CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+			CURLOPT_CUSTOMREQUEST => 'POST',
+			CURLOPT_HTTPHEADER => [
+				'x-api-key: ' . env('CREDLY_API_KEY'),
+				'x-api-secret: ' . env('CREDLY_API_SECRET')
+			]
+		]);
+
+		curl_setopt($curl, CURLOPT_USERPWD, Request::input('username') . ":" . Request::input('password'));
+		$curl_response = curl_exec($curl);
+		$err = curl_error($curl);
+
+		curl_close($curl);
+
+		if (! $err && is_string($curl_response)) {
+			$jsonResults = json_decode($curl_response);
+
+			if (json_last_error() === JSON_ERROR_NONE) {
+				if ($jsonResults->data && $jsonResults->token) {
+					Cookie::queue(Cookie::make('credly_token', $jsonResults->data->token, 525600));
+					return '{"isLoggedIn": true}';
+				}
+			}
+		}
+
+		return '{"isLoggedIn": false}';
+	}
+
+	/*public function authenticate($username, $password) {
 		$curl = curl_init();
 
 		curl_setopt_array($curl, [
@@ -64,7 +100,7 @@ class CredlyAPI extends Controller {
 		}
 
 		return $results;
-	}
+	}*/
 
 	/**
 	 * Proxy the Credly API from the client.
@@ -81,7 +117,6 @@ class CredlyAPI extends Controller {
 			CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
 			CURLOPT_CUSTOMREQUEST => $method,
 			CURLOPT_HTTPHEADER => [
-				// TODO: Don't put these in source control.
 				'x-api-key: c6b764f37bc6755a176eceb524854298',
 				'x-api-secret: pUiQ2r0W3aCvoNlDeOB882j5ARW2KSqYIm7naLMEFCYVG4hkvCVIVHPVhSb5PMBTUX9x4yPefH2apwYlTfdApnDGzq0pmh5x4d37mH11a0XV6qGLSIfI/H85HYK62E4L5H60WKQfIBAiIJQdICnXT2sCHkWkX9p3ZbarDllV/9o='
 			]
