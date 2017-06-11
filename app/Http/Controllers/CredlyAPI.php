@@ -50,7 +50,7 @@ class CredlyAPI extends Controller {
 		$curl_response = curl_exec($curl);
 		$err = curl_error($curl);
 		curl_close($curl);
-
+return 'moop';
 		if (!$err && is_string($curl_response)) {
 			$jsonResults = json_decode($curl_response);
 
