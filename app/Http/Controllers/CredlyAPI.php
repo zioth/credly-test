@@ -2,7 +2,7 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
-use Illuminate\Cookie;
+use Illuminate\Support\Facades\Cookie;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
