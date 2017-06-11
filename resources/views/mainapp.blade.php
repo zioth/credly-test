@@ -54,12 +54,16 @@
 				position: absolute;
 				height: 24px;
 				width: 100%;
-				background-color: rgba(0, 0, 0, .5);
+				background-color: rgba(0, 0, 0, .75);
 				overflow: hidden;
 				color: #FFF;
 			}
 			.member_box .display_name {
 				top: 0;
+				font-weight: bold;
+				padding: 0 4px;
+				line-height: 24px;
+				text-align: center;
 			}
 
 			.main-wrapper:not(.loggedIn),
@@ -158,7 +162,7 @@
 							</div>
 
 							<div ng-switch on="contact.loadedBadges" class="member_badges member_overlay">
-								<div ng-switch-when="true" class="show_badges" ng-click="badgesController.showBadges(contact.id)">
+								<div ng-switch-when="false" class="show_badges" ng-click="badgesController.showBadges(contact.id)">
 									Show Badges
 								</div>
 								<div ng-switch-default class="badges">
