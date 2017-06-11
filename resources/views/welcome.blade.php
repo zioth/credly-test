@@ -26,7 +26,7 @@
 					ng-repeat="badge in badgesController.badges">
 					<div class="clearfix" ng-if="$index % 3 == 0"></div>
 					<div class="col-xs-4">
-						<div>{{ badge.title }}</div>
+						<div>{% badge.title %}</div>
 						<img ng-src="{% badge.image_url | imageFilter: 13 %}" />
 					</div>
 				</a>
