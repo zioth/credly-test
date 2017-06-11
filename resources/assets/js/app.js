@@ -119,7 +119,7 @@ angular.module('CredlyDisplayer', ['ngAnimate'])
 		vm.isLoggedIn = true; // innocent until proven guilty
 		vm.username = '';
 		vm.password = '';
-		vm.login = function() {
+		$scope.login = function() {
 			console.error('moo');
 		};
 
