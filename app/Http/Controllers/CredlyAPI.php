@@ -46,11 +46,12 @@ class CredlyAPI extends Controller {
 			]
 		]);
 
+		return ''.Request::input('username');
 		curl_setopt($curl, CURLOPT_USERPWD, Request::input('username') . ":" . Request::input('password'));
 		$curl_response = curl_exec($curl);
 		$err = curl_error($curl);
 		curl_close($curl);
-return 'moop';
+
 		if (!$err && is_string($curl_response)) {
 			$jsonResults = json_decode($curl_response);
 
