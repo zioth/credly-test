@@ -4,7 +4,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-class AjaxController extends Controller {
+class CredlyAPI extends Controller {
 	public function index() {
 		//http_build_query($_GET)
 		//return $this->getData($response, 'badges', $args, 'GET');
