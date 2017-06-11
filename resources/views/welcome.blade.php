@@ -29,7 +29,7 @@
 						<div class="clearfix" ng-if="$index % 3 == 0"></div>
 						<div class="col-xs-4">
 							<div>{{ badge.title }}</div>
-							<img ng-src="{% badge.image_url | imageFilter: 13 %}" />
+							<img ng-src="{{ badge.image_url | imageFilter: 13 }}" />
 						</div>
 					</a>
 					<div class="loader loader--style2" title="1" ng-show="badgesController.isLoading">
