@@ -10,7 +10,10 @@ use App\Http\Controllers\Controller;
 //TODO: Don't allow arbitrary actions -- maybe some need more security?
 class CredlyAPI extends Controller {
 	public function index($action) {
-		$args = array();
+		$args = Request.all();
+		// From authentication. If the cookie is missing or the token is expired, the client will handle the error and present a login page.
+		// TODO: Optimize: If there's no cookie, many requests will fail.
+		array_push($args, 'access_token=' . Cookie::get('credly_token'));
 		//array_push($args, 'include_authorized=0');
 		$data = $this->getData($action, join('&', $args), 'GET');
 
@@ -110,9 +113,6 @@ class CredlyAPI extends Controller {
 				'x-api-secret: pUiQ2r0W3aCvoNlDeOB882j5ARW2KSqYIm7naLMEFCYVG4hkvCVIVHPVhSb5PMBTUX9x4yPefH2apwYlTfdApnDGzq0pmh5x4d37mH11a0XV6qGLSIfI/H85HYK62E4L5H60WKQfIBAiIJQdICnXT2sCHkWkX9p3ZbarDllV/9o='
 			]
 		]);
-
-		// From authentication. If the cookie is missing or the token is expired, the client will handle the error and present a login page.
-		array_push($args, 'access_token=' . Cookie::get('credly_token'));
 
 		$curl_response = curl_exec($curl);
 		$err = curl_error($curl);
