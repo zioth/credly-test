@@ -41,16 +41,41 @@
 				/* TODO: Default avatar */
 				background-color: #AAA;
 			}
+			.main-wrapper:not(.loggedIn),
+			.login-form.loggedIn {
+				display: none;
+			}
 		</style>
 	</head>
 	<body ng-controller="BadgesController as badgesController">
 		{{-- verbatim to allow Angular interpolation --}}
 		@verbatim
+			<div class="login-form" ng-class="{'loggedIn': badgesController.isLoggedIn}">
+				<!-- TODO: If made one attempt and failed, err -->
+				<!-- <input type="text" name="username" placeholder="Email address"/>
+				<input type="password" name="password" placeholder="*****"/>
+				<div class="button" onclick="badgesController.signIn()">Sign In</div> -->
+				<form name="form" ng-submit="badgesController.login(); return false" role="form">
+					<div class="form-group">
+						<label for="username">Username</label>
+						<input type="text" name="username" id="username" class="form-control" ng-model="badgesController.username" required />
+					</div>
+					<div class="form-group">
+						<label for="password">Password</label>
+						<input type="password" name="password" id="password" class="form-control" ng-model="badgesController.password" required />
+					</div>
+					<div class="form-actions">
+						<button type="submit" class="btn btn-primary">Login</button>
+						<!-- TODO
+							<img ng-if="vm.dataLoading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+						-->
+					</div>
+				</form>
+			</div>
 			<div class="main-wrapper container" ng-class="{'loggedIn': badgesController.isLoggedIn}">
 				<div class="columns">
 					<div
 						class="badges_column ui_column"
-						infinite-scroll
 						event-name="loadMoreBadges"
 						ng-class="{'loading': badgesController.isLoading}"
 						>

@@ -112,8 +112,14 @@ angular.module('CredlyDisplayer', ['ngAnimate'])
 			);
 		};
 
-		vm.isLoading = false;
 		vm.isLoggedIn = true; // innocent until proven guilty
+		vm.username = '';
+		vm.password = '';
+		vm.login = function() {
+			console.error('moo');
+		};
+
+		vm.isLoading = false;
 		vm.badges = [];
 		vm.contacts = [];
 		vm.getBadges();
