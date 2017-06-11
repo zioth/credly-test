@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Input;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
@@ -47,7 +48,7 @@ class CredlyAPI extends Controller {
 		]);
 
 		return 'iiiiiee';
-		curl_setopt($curl, CURLOPT_USERPWD, Request::input('username') . ":" . Request::input('password'));
+		curl_setopt($curl, CURLOPT_USERPWD, Input::get('username', '') . ":" . Input::get('password', ''));
 		$curl_response = curl_exec($curl);
 		$err = curl_error($curl);
 		curl_close($curl);
