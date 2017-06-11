@@ -13,6 +13,19 @@
 
 		<!-- TODO: CSS file -->
 		<style>
+			.ui_column {
+				width: 50%;
+				box-sizing: border-box;
+				padding: 10px;
+			}
+			.ui_column.badges_column {
+				float: left;
+				border-right: 1px solid #ccc;
+			}
+			.ui_column.contacts_column {
+				float: right;
+				border-right: 1px solid #ccc;
+			}
 			.avatar {
 				display: block;
 				height: 170px;
@@ -31,7 +44,7 @@
 		@verbatim
 			<div class="main-wrapper container">
 				<div
-					class="badges_column"
+					class="badges_column ui_column"
 					infinite-scroll
 					event-name="loadMoreBadges"
 					ng-class="{'loading': badgesController.isLoading}"
@@ -63,7 +76,7 @@
 					</div>
 				</div>
 				<div
-					class="contacts_column"
+					class="contacts_column ui_column"
 					event-name="loadMoreContacts"
 					ng-class="{'loading': badgesController.isLoading}"
 					>
