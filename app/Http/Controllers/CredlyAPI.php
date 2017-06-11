@@ -47,7 +47,6 @@ class CredlyAPI extends Controller {
 			]
 		]);
 
-		return 'iiiiiee';
 		curl_setopt($curl, CURLOPT_USERPWD, Input::get('username', '') . ":" . Input::get('password', ''));
 		$curl_response = curl_exec($curl);
 		$err = curl_error($curl);
