@@ -20,8 +20,6 @@ const app = new Vue({
 	el: '#app'
 });
 */
-console.error(12345);
-debugger;
 (function() {
 'use strict';
 
