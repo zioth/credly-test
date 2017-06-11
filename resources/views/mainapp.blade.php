@@ -59,7 +59,7 @@
 				bottom: 0;
 				height: 24px;
 				width: 100%;
-				background-color: rgba(0,0,0, 50%);
+				background-color: rgba(0, 0, 0, .5);
 				overflow: hidden;
 			}
 			.member_badges .show_badges {
@@ -152,7 +152,7 @@
 								</div>
 							</div>
 
-							<div ng-switch on="contact.badges" class="member_badges">
+							<div ng-switch on="contact.loadedBadges" class="member_badges">
 								<div ng-switch-when="true" class="show_badges" ng-click="badgesController.showBadges(contact.id)">
 									Show Badges
 								</div>
