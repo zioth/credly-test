@@ -25,7 +25,11 @@ const app = new Vue({
 
 angular.module('CredlyDisplayer', [
 		'ngAnimate'
-	])
+	], function(interpolateProvider) {
+		// Remove the conflict with Laravel -- both use double-curly-brackets for interpolation.
+		interpolateProvider.startSymbol('{%');
+		interpolateProvider.endSymbol('%}');
+	})
 	.value('BROADCAST_SPEED', 1000)
 	.value('SCROLL_LIMIT', 1000)
 	.value('SCROLL_LIMIT_REACHED_EVENT_NAME', 'InfiniteScrollLimitReached')
@@ -261,6 +265,7 @@ angular.module('CredlyDisplayer', [
 	.controller('BadgesController', ['$scope', 'Badge', function($scope, Badge) {
 		var vm = this;
 		var page = 1;
+vm.moo = 'MOOOOOOOOO!';
 
 		$scope.$on('loadMoreBadges', function() {
 			vm.getBadges();
