@@ -16,7 +16,6 @@ class AjaxController extends Controller {
 		array_push($args, 'access_token=' . $token);
 		array_push($args, 'include_authorized=0');
 		$data = $this->getData('me/badges/created', join('&', $args), 'GET');
-		return $response
 
 
 		//$msg = "This is a simple message.";
