@@ -70,6 +70,19 @@
 		</style>
 	</head>
 	<body ng-controller="BadgesController as badgesController">
+		<nav class="navbar navbar-default navbar-fixed-top navbar-inverse">
+			<div class="container">
+				<p class="navbar-text">Credly Displayer</p>
+				<form class="navbar-form navbar-right">
+					<div class="form-group">
+					  <input type="text" class="form-control" placeholder="Search">
+					</div>
+					<button type="submit" class="btn btn-default">Submit</button>
+				</form>
+			</div>
+		</nav>
+
+
 
 		<div class="flex-center position-ref full-height">
 			@if (Route::has('login'))
