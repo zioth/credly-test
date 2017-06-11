@@ -110,6 +110,7 @@
 						event-name="loadMoreContacts"
 						ng-class="{'loading': badgesController.isLoading}"
 						>
+						<!-- TODO: This always displays at least one, even if there are no contacts. -->
 						<div
 							class="member-image"
 							ng-repeat="contact in badgesController.contacts"
