@@ -5,7 +5,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 class CredlyAPI extends Controller {
-	public function index() {
+	public function index($action) {
 		//http_build_query($_GET)
 		//return $this->getData($response, 'badges', $args, 'GET');
 
@@ -19,7 +19,7 @@ class CredlyAPI extends Controller {
 		$args = array();
 		array_push($args, 'access_token=' . $token);
 		array_push($args, 'include_authorized=0');
-		$data = $this->getData('me/badges/created', join('&', $args), 'GET');
+		$data = $this->getData($action, join('&', $args), 'GET');
 
 		//$msg = "This is a simple message.";
 		return response()->json($data);

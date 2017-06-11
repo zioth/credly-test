@@ -32,7 +32,7 @@ angular.module('CredlyDisplayer', ['ngAnimate'])
 	})
 	.factory('Badge', ['$http', function($http) {
 		return {
-			getBadges: function(params) {
+			get: function(params) {
 				if (typeof params === 'undefined') params = {};
 
 				return $http({
@@ -44,7 +44,21 @@ angular.module('CredlyDisplayer', ['ngAnimate'])
 			}
 		}
 	}])
-	.controller('BadgesController', ['$scope', 'Badge', function($scope, Badge) {
+	.factory('Contacts', ['$http', function($http) {
+		return {
+			get: function(params) {
+				if (typeof params === 'undefined') params = {};
+
+				return $http({
+					method: 'GET',
+					url: '/contacts',
+					params: params,
+					cache: true
+				});
+			}
+		}
+	}])
+	.controller('BadgesController', ['$scope', 'Badge', 'Contacts', function($scope, Badge, Contacts) {
 		var vm = this;
 		var page = 1;
 
@@ -57,10 +71,10 @@ angular.module('CredlyDisplayer', ['ngAnimate'])
 
 			vm.isLoading = true;
 
-			Badge.getBadges({
+			Badge.get({
 				order_direction: 'DESC',
-				page: page++,
-				per_page: 12
+				page: 1,
+				per_page: 20
 			}).then(
 				function(res) {
 					vm.isLoading = false;
@@ -76,8 +90,31 @@ angular.module('CredlyDisplayer', ['ngAnimate'])
 			);
 		};
 
+		vm.getContacts = function() {
+			// TODO: loading state
+			Contacts.get({
+				order_direction: 'DESC',
+				page: 1,
+				per_page: 20
+			}).then(
+				function(res) {
+					vm.isLoading = false;
+					if (res.data.data) {
+						vm.contacts = vm.contacts.concat(res.data.data);
+					}
+					$scope.noMore = vm.contacts.length >= res.data.paging.total_results;
+				},
+				function(err) {
+					vm.isLoading = false;
+					console.error('Oops');
+				}
+			);
+		};
+
 		vm.isLoading = false;
 		vm.badges = [];
+		vm.contacts = [];
 		vm.getBadges();
+		vm.getContacts();
 	}]);
 })();

@@ -16,5 +16,8 @@ Route::get('/', function () {
 });
 
 Route::get('/badges', function(App\Http\Controllers\CredlyAPI $api) {
-	return $api->index();
+	return $api->index('me/badges/created');
+});
+Route::get('/contacts', function(App\Http\Controllers\CredlyAPI $api) {
+	return $api->index('me/contacts');
 });
