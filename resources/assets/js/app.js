@@ -22,13 +22,10 @@ const app = new Vue({
 */
 (function() {
 'use strict';
-	console.error('start');
 
 angular.module('CredlyDisplayer', [
 		'ngAnimate'
-	], function(interpolateProvider) {
-	console.error('doing');
-	})
+	])
 	.value('BROADCAST_SPEED', 1000)
 	.value('SCROLL_LIMIT', 1000)
 	.value('SCROLL_LIMIT_REACHED_EVENT_NAME', 'InfiniteScrollLimitReached')
