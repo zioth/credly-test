@@ -66,7 +66,7 @@ angular.module('CredlyDisplayer', ['ngAnimate'])
 				return $http({
 					method: 'POST',
 					url: '/authenticate',
-					params: {username: username, password: password},
+					params: 'username=' + username + '&password=' + password, // Angular doesn't like objects in POST
 					headers: {'Content-Type': 'application/x-www-form-urlencoded'}
 				});
 			}
