@@ -26,9 +26,7 @@ const app = new Vue({
 angular.module('CredlyDisplayer', [
 		'ngAnimate'
 	], function(interpolateProvider) {
-		// Remove the conflict with Laravel -- both use double-curly-brackets for interpolation.
-		//interpolateProvider.startSymbol('{%');
-		//interpolateProvider.endSymbol('%}');
+	console.error('doing');
 	})
 	.value('BROADCAST_SPEED', 1000)
 	.value('SCROLL_LIMIT', 1000)
