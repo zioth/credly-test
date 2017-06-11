@@ -48,8 +48,6 @@
 					</div>
 				</div>
 			</div>
-
-			<div><div>TEST MOOK</div>--- {{ badgesController.moo }} {{ badgesController.isLoading }} ---</div>
 		@endverbatim
 
 		<div class="flex-center position-ref full-height">

@@ -47,7 +47,6 @@ angular.module('CredlyDisplayer', ['ngAnimate'])
 	.controller('BadgesController', ['$scope', 'Badge', function($scope, Badge) {
 		var vm = this;
 		var page = 1;
-vm.moo = 'MOOOOOOOOO!';
 
 		$scope.$on('loadMoreBadges', function() {
 			vm.getBadges();
