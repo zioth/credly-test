@@ -5,7 +5,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 class AjaxController extends Controller {
-	public function index(){
+	public function index() {
 		//http_build_query($_GET)
 		//return $this->getData($response, 'badges', $args, 'GET');
 
@@ -17,12 +17,10 @@ class AjaxController extends Controller {
 		array_push($args, 'include_authorized=0');
 		$data = $this->getData('me/badges/created', join('&', $args), 'GET');
 
-
 		//$msg = "This is a simple message.";
-		return response()
-			->json($data);
+		return response()->json($data);
 			//->json(array('msg'=> $msg), 200);
-	   }
+	}
 
 
 	//TODO: Auto-detect method
