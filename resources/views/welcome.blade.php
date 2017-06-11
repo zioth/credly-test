@@ -12,7 +12,7 @@
 		<link rel="stylesheet" type="text/css" href="/css/app.css">
 	</head>
 	<body ng-controller="BadgesController as badgesController">
-		@include('badge_ui')
+		{{-- verbatim to allow Angular interpolation --}}
 		@verbatim
 			<div class="main-wrapper container">
 				<div
@@ -23,12 +23,12 @@
 					>
 					<a
 						class="badge-image"
-						href="https://credly.com/recipients/{% badge.id %}"
+						href="https://credly.com/recipients/{{ badge.id }}"
 						target="_blank"
 						ng-repeat="badge in badgesController.badges">
 						<div class="clearfix" ng-if="$index % 3 == 0"></div>
 						<div class="col-xs-4">
-							<div>{% badge.title %}</div>
+							<div>{{ badge.title }}</div>
 							<img ng-src="{% badge.image_url | imageFilter: 13 %}" />
 						</div>
 					</a>
@@ -49,7 +49,7 @@
 				</div>
 			</div>
 
-			<div><div>TEST MOOK</div>--- {% moo %} ---</div>
+			<div><div>TEST MOOK</div>--- {{ moo }} ---</div>
 		@endverbatim
 
 		<div class="flex-center position-ref full-height">
