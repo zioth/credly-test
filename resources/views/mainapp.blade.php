@@ -46,7 +46,7 @@
 	<body ng-controller="BadgesController as badgesController">
 		{{-- verbatim to allow Angular interpolation --}}
 		@verbatim
-			<div class="main-wrapper container">
+			<div class="main-wrapper container" ng-class="{'loggedIn': badgesController.isLoggedIn}">
 				<div class="columns">
 					<div
 						class="badges_column ui_column"

@@ -31,7 +31,7 @@ angular.module('CredlyDisplayer', ['ngAnimate'])
 			return ret.substring(0, endIndex) + '_' + size + ret.substring(endIndex);
 		}
 	})
-	.factory('Badge', ['$http', function($http) {
+	.factory('Badges', ['$http', function($http) {
 		return {
 			get: function(params) {
 				if (typeof params === 'undefined') params = {};
@@ -59,7 +59,7 @@ angular.module('CredlyDisplayer', ['ngAnimate'])
 			}
 		}
 	}])
-	.controller('BadgesController', ['$scope', 'Badge', 'Contacts', function($scope, Badge, Contacts) {
+	.controller('BadgesController', ['$scope', 'Badges', 'Contacts', function($scope, Badges, Contacts) {
 		var vm = this;
 		var page = 1;
 
@@ -72,13 +72,14 @@ angular.module('CredlyDisplayer', ['ngAnimate'])
 
 			vm.isLoading = true;
 
-			Badge.get({
+			Badges.get({
 				order_direction: 'DESC',
 				page: 1,
 				per_page: 20
 			}).then(
 				function(res) {
 					vm.isLoading = false;
+					vm.isLoggedIn = !res.data || !res.data.meta || res.data.meta.status_code != 401;
 					if (res.data.data) {
 						vm.badges = vm.badges.concat(res.data.data);
 					}
@@ -86,7 +87,6 @@ angular.module('CredlyDisplayer', ['ngAnimate'])
 				},
 				function(err) {
 					vm.isLoading = false;
-					console.error('Oops');
 				}
 			);
 		};
@@ -100,6 +100,7 @@ angular.module('CredlyDisplayer', ['ngAnimate'])
 			}).then(
 				function(res) {
 					vm.isLoading = false;
+					vm.isLoggedIn = !res.data || !res.data.meta || res.data.meta.status_code != 401;
 					if (res.data.data) {
 						vm.contacts = vm.contacts.concat(res.data.data);
 					}
@@ -107,12 +108,12 @@ angular.module('CredlyDisplayer', ['ngAnimate'])
 				},
 				function(err) {
 					vm.isLoading = false;
-					console.error('Oops');
 				}
 			);
 		};
 
 		vm.isLoading = false;
+		vm.isLoggedIn = true; // innocent until proven guilty
 		vm.badges = [];
 		vm.contacts = [];
 		vm.getBadges();
