@@ -22,9 +22,7 @@ const app = new Vue({
 (function() {
 'use strict';
 
-angular.module('CredlyDisplayer', [
-		'ngAnimate'
-	])
+angular.module('CredlyDisplayer', ['ngAnimate'])
 	.value('BROADCAST_SPEED', 1000)
 	.value('SCROLL_LIMIT', 1000)
 	.value('SCROLL_LIMIT_REACHED_EVENT_NAME', 'InfiniteScrollLimitReached')
@@ -244,6 +242,8 @@ angular.module('CredlyDisplayer', [
 		}
 	})
 	.factory('Badge', ['$http', function($http) {
+vm.moo = 'MOOOOOOOOO!';
+		return {getBadges:function(){}};
 		return {
 			getBadges: function(params) {
 				if (typeof params === 'undefined') params = {};
@@ -260,7 +260,6 @@ angular.module('CredlyDisplayer', [
 	.controller('BadgesController', ['$scope', 'Badge', function($scope, Badge) {
 		var vm = this;
 		var page = 1;
-vm.moo = 'MOOOOOOOOO!';
 
 		$scope.$on('loadMoreBadges', function() {
 			vm.getBadges();
