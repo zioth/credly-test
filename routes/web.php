@@ -22,6 +22,6 @@ Route::get('/contacts', function(App\Http\Controllers\CredlyAPI $api) {
 	return $api->index('me/contacts');
 });
 
-Route::get('/authenticate', function(App\Http\Controllers\CredlyAPI $api) {
+Route::post('/authenticate', function(App\Http\Controllers\CredlyAPI $api) {
 	return $api->authenticate();
 });
