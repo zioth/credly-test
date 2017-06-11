@@ -13,6 +13,11 @@
 
 		<!-- TODO: CSS file -->
 		<style>
+			.columns {
+				display: -ms-flex;
+				display: -webkit-flex;
+				display: flex;
+			}
 			.ui_column {
 				width: 50%;
 				box-sizing: border-box;
@@ -24,7 +29,6 @@
 			}
 			.ui_column.contacts_column {
 				float: right;
-				border-right: 1px solid #ccc;
 			}
 			.avatar {
 				display: block;
@@ -43,57 +47,59 @@
 		{{-- verbatim to allow Angular interpolation --}}
 		@verbatim
 			<div class="main-wrapper container">
-				<div
-					class="badges_column ui_column"
-					infinite-scroll
-					event-name="loadMoreBadges"
-					ng-class="{'loading': badgesController.isLoading}"
-					>
-					<a
-						class="badge-image"
-						href="https://credly.com/recipients/{{ badge.id }}"
-						target="_blank"
-						ng-repeat="badge in badgesController.badges">
-						<div class="clearfix" ng-if="$index % 3 == 0"></div>
-						<div class="col-xs-4">
-							<div>{{ badge.title }}</div>
-							<img ng-src="{{ badge.image_url | imageFilter: 13 }}" />
-						</div>
-					</a>
-					<div class="loader loader--style2" title="1" ng-show="badgesController.isLoading">
-					  <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-						 width="40px" height="40px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
-					  <path fill="#000" d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z">
-						<animateTransform attributeType="xml"
-						  attributeName="transform"
-						  type="rotate"
-						  from="0 25 25"
-						  to="360 25 25"
-						  dur="0.6s"
-						  repeatCount="indefinite"/>
-						</path>
-					  </svg>
-					</div>
-				</div>
-				<div
-					class="contacts_column ui_column"
-					event-name="loadMoreContacts"
-					ng-class="{'loading': badgesController.isLoading}"
-					>
+				<div class="columns">
 					<div
-						class="member-image"
-						ng-repeat="contact in badgesController.contacts"
-						data-memberid="{{ contact.contact_member_id }}"
-						data-id="{{ contact.id }}"
-					>
-						<div ng-switch on="contact.is_member" >
-							<div ng-switch-when="true">
-								<img class="avatar" src="{{ contact.member.avatar }}"/>
-								<div>{{ contact.member.display_name }}</div>
+						class="badges_column ui_column"
+						infinite-scroll
+						event-name="loadMoreBadges"
+						ng-class="{'loading': badgesController.isLoading}"
+						>
+						<a
+							class="badge-image"
+							href="https://credly.com/recipients/{{ badge.id }}"
+							target="_blank"
+							ng-repeat="badge in badgesController.badges">
+							<div class="clearfix" ng-if="$index % 3 == 0"></div>
+							<div class="col-xs-4">
+								<div>{{ badge.title }}</div>
+								<img ng-src="{{ badge.image_url | imageFilter: 13 }}" />
 							</div>
-							<div ng-switch-default>
-								<div class="avatar non_member"></div>
-								<div>{{ contact.first_name }} {{ contact.last_name }}</div>
+						</a>
+						<div class="loader loader--style2" title="1" ng-show="badgesController.isLoading">
+						  <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+							 width="40px" height="40px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
+						  <path fill="#000" d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z">
+							<animateTransform attributeType="xml"
+							  attributeName="transform"
+							  type="rotate"
+							  from="0 25 25"
+							  to="360 25 25"
+							  dur="0.6s"
+							  repeatCount="indefinite"/>
+							</path>
+						  </svg>
+						</div>
+					</div>
+					<div
+						class="contacts_column ui_column"
+						event-name="loadMoreContacts"
+						ng-class="{'loading': badgesController.isLoading}"
+						>
+						<div
+							class="member-image"
+							ng-repeat="contact in badgesController.contacts"
+							data-memberid="{{ contact.contact_member_id }}"
+							data-id="{{ contact.id }}"
+						>
+							<div ng-switch on="contact.is_member" >
+								<div ng-switch-when="true">
+									<img class="avatar" src="{{ contact.member.avatar }}"/>
+									<div>{{ contact.member.display_name }}</div>
+								</div>
+								<div ng-switch-default>
+									<div class="avatar non_member"></div>
+									<div>{{ contact.first_name }} {{ contact.last_name }}</div>
+								</div>
 							</div>
 						</div>
 					</div>
