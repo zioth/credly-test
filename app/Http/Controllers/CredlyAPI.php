@@ -9,10 +9,14 @@ class CredlyAPI extends Controller {
 		//http_build_query($_GET)
 		//return $this->getData($response, 'badges', $args, 'GET');
 
+		//Getting params:
+		//Request::input('argument1')
+
 		//TODO Get from client, put in cookie
 		$token = $this->authenticate('junk1@zioth.com', 'greycoat');
 
-
+//Request::all()
+		$args = array();
 		array_push($args, 'access_token=' . $token);
 		array_push($args, 'include_authorized=0');
 		$data = $this->getData('me/badges/created', join('&', $args), 'GET');
