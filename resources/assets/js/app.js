@@ -18,6 +18,7 @@ const app = new Vue({
 	el: '#app'
 });
 */
+
 (function() {
 'use strict';
 
