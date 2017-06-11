@@ -10,24 +10,11 @@ use App\Http\Controllers\Controller;
 //TODO: Don't allow arbitrary actions -- maybe some need more security?
 class CredlyAPI extends Controller {
 	public function index($action) {
-		//http_build_query($_GET)
-		//return $this->getData($response, 'badges', $args, 'GET');
-
-		//Getting params:
-		//Request::input('argument1')
-
-
-//Request::all()
 		$args = array();
-		//TODO Get from client, put in cookie
-		//$token = $this->authenticate('junk1@zioth.com', 'greycoat');
-		//array_push($args, 'access_token=' . $token);
 		//array_push($args, 'include_authorized=0');
 		$data = $this->getData($action, join('&', $args), 'GET');
 
-		//$msg = "This is a simple message.";
 		return response()->json($data);
-			//->json(array('msg'=> $msg), 200);
 	}
 
 	// TODO: Create new middleware to do integrated Laravel authentication.
@@ -123,6 +110,9 @@ class CredlyAPI extends Controller {
 				'x-api-secret: pUiQ2r0W3aCvoNlDeOB882j5ARW2KSqYIm7naLMEFCYVG4hkvCVIVHPVhSb5PMBTUX9x4yPefH2apwYlTfdApnDGzq0pmh5x4d37mH11a0XV6qGLSIfI/H85HYK62E4L5H60WKQfIBAiIJQdICnXT2sCHkWkX9p3ZbarDllV/9o='
 			]
 		]);
+
+		// From authentication. If the cookie is missing or the token is expired, the client will handle the error and present a login page.
+		array_push($args, 'access_token=' . Cookie::get('credly_token'));
 
 		$curl_response = curl_exec($curl);
 		$err = curl_error($curl);

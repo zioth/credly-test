@@ -63,6 +63,7 @@ angular.module('CredlyDisplayer', ['ngAnimate'])
 		var vm = this;
 		return {
 			get: function(username, password) {
+				// TODO: The chrome network console puts the username&password in the URL, but the Angular docs say this is the correct way to do it. Investigate security issue!
 				return $http({
 					method: 'POST',
 					url: '/authenticate',
@@ -131,8 +132,7 @@ angular.module('CredlyDisplayer', ['ngAnimate'])
 
 		$scope.login = function() {
 			LogIn.get(vm.username, vm.password).then(function(res) {
-console.error(res);
-				if (res.isLoggedIn) {
+				if (res.data && res.data.isLoggedIn) {
 					_init();
 				}
 				else {
