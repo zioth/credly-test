@@ -10,6 +10,21 @@
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
 		<link rel="stylesheet" type="text/css" href="/css/app.css">
+
+		<!-- TODO: CSS file -->
+		<style>
+			.avatar {
+				display: block;
+				height: 170px;
+				width: 170px;
+				border: 2px solid black;
+				border-radius: 4px;
+			}
+			.avatar.non_member {
+				/* TODO: Default avatar */
+				background-color: #AAA;
+			}
+		</style>
 	</head>
 	<body ng-controller="BadgesController as badgesController">
 		{{-- verbatim to allow Angular interpolation --}}
@@ -47,7 +62,6 @@
 					  </svg>
 					</div>
 				</div>
-
 				<div
 					class="contacts_column"
 					event-name="loadMoreContacts"
@@ -60,11 +74,14 @@
 						data-id="{{ contact.id }}"
 					>
 						<div ng-switch on="contact.is_member" >
-							<div ng-switch-when="true" class="avatar member">
-								<div><img src="contact.member.avatar"/></div>
+							<div ng-switch-when="true">
+								<img class="avatar" src="{{ contact.member.avatar }}"/>
 								<div>{{ contact.member.display_name }}</div>
 							</div>
-							<div ng-switch-default class="avatar non_member">{{ contact.first_name }} {{ contact.last_name }}</span>
+							<div ng-switch-default>
+								<div class="avatar non_member"></div>
+								<div>{{ contact.first_name }} {{ contact.last_name }}</div>
+							</div>
 						</div>
 					</div>
 				</div>
