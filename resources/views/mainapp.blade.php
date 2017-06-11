@@ -30,20 +30,46 @@
 			.ui_column.contacts_column {
 				float: right;
 			}
-			.avatar {
+			.member_box {
+				position: relative;
 				display: block;
 				height: 170px;
 				width: 170px;
 				border: 2px solid black;
 				border-radius: 4px;
+				background-color: #AAA;
+			}
+			.avatar {
+				display: block;
+				height: 100%;
+				width: 100%;
+				border: 2px solid black;
+				border-radius: 4px;
 			}
 			.avatar.non_member {
 				/* TODO: Default avatar */
-				background-color: #AAA;
 			}
 			.main-wrapper:not(.loggedIn),
 			.login-form.loggedIn {
 				display: none;
+			}
+
+			.member_badges {
+				position: absolute;
+				bottom: 0;
+				height: 24px;
+				width: 100%;
+				background-color: rgba(0,0,0, 50%);
+				overflow: hidden;
+			}
+			.member_badges .show_badges {
+				color: #FFF;
+			}
+			.member_badges .badges .badge {
+				height: 18px;
+				width: 18px;
+				float: left;
+				padding: 3px;
 			}
 		</style>
 	</head>
@@ -52,9 +78,6 @@
 		@verbatim
 			<div class="login-form" ng-class="{'loggedIn': badgesController.isLoggedIn}">
 				<!-- TODO: If made one attempt and failed, err -->
-				<!-- <input type="text" name="username" placeholder="Email address"/>
-				<input type="password" name="password" placeholder="*****"/>
-				<div class="button" onclick="badgesController.signIn()">Sign In</div> -->
 				<form name="form" ng-submit="login()" role="form">
 					<div class="form-group">
 						<label for="username">Username</label>
@@ -112,19 +135,35 @@
 						>
 						<!-- TODO: This always displays at least one, even if there are no contacts. -->
 						<div
-							class="member-image"
+							class="member_box"
+							ng-class="{'is_member': contact.is_member}"
 							ng-repeat="contact in badgesController.contacts"
 							data-memberid="{{ contact.contact_member_id }}"
 							data-id="{{ contact.id }}"
 						>
 							<div ng-switch on="contact.is_member" >
 								<div ng-switch-when="true">
-									<img class="avatar" src="{{ contact.member.avatar }}"/>
+									<img class="avatar" ng-src="{{ contact.member.avatar }}"/>
 									<div>{{ contact.member.display_name }}</div>
 								</div>
 								<div ng-switch-default>
 									<div class="avatar non_member"></div>
 									<div>{{ contact.first_name }} {{ contact.last_name }}</div>
+								</div>
+							</div>
+
+							<div ng-switch on="contact.badges" class="member_badges">
+								<div ng-switch-when="true" class="show_badges" ng-click="badgesController.showBadges(contact.id)">
+									Show Badges
+								</div>
+								<div ng-switch-default class="badges">
+									<img
+										class="badge"
+										ng-src="{{ badge.image }}"
+										ng-repeat="badge in contact.badges"
+										data-memberid="{{ contact.contact_member_id }}"
+										data-id="{{ contact.id }}"
+									/>
 								</div>
 							</div>
 						</div>
@@ -133,18 +172,7 @@
 			</div>
 		@endverbatim
 
-		<!-- TODO Authentication -->
-		@if (Route::has('login'))
-			<div class="top-right links">
-				@if (Auth::check())
-					<a href="{{ url('/home') }}">Home</a>
-				@else
-					<a href="{{ url('/login') }}">Login</a>
-					<a href="{{ url('/register') }}">Register</a>
-				@endif
-			</div>
-		@endif
-
+		<!-- TODO: Integrate angular into Laraview project instead of taking this shortcut -->
 		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
 		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-animate.min.js"></script>
 		<script type="text/javascript" src="/js/app.js"></script>

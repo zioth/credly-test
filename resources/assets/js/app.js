@@ -130,6 +130,10 @@ angular.module('CredlyDisplayer', ['ngAnimate'])
 			);
 		};
 
+		vm.showBadges = function(memberid) {
+			console.error(memberid);
+		};
+
 		$scope.login = function() {
 			LogIn.get(vm.username, vm.password).then(function(res) {
 				if (res.data && res.data.isLoggedIn) {

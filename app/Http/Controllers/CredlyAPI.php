@@ -9,7 +9,7 @@ use App\Http\Controllers\Controller;
 
 class CredlyAPI extends Controller {
 	/**
-	 * Proxy for the Credly API. Currently only handles GET requests.
+	 * Proxy for the Credly API. Currently only handles GET requests. See web.php for usages of this function.
 	 *
 	 * @param {string} action - The action part of the API (for example, '/me/contacts')
 	 * @returns {string} JSON response from Credly API.
@@ -35,8 +35,8 @@ class CredlyAPI extends Controller {
 			CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
 			CURLOPT_CUSTOMREQUEST => $method,
 			CURLOPT_HTTPHEADER => [
-				'x-api-key: c6b764f37bc6755a176eceb524854298',
-				'x-api-secret: pUiQ2r0W3aCvoNlDeOB882j5ARW2KSqYIm7naLMEFCYVG4hkvCVIVHPVhSb5PMBTUX9x4yPefH2apwYlTfdApnDGzq0pmh5x4d37mH11a0XV6qGLSIfI/H85HYK62E4L5H60WKQfIBAiIJQdICnXT2sCHkWkX9p3ZbarDllV/9o='
+				'x-api-key: ' . env('CREDLY_API_KEY'),
+				'x-api-secret: ' . env('CREDLY_API_SECRET')
 			]
 		]);
 
