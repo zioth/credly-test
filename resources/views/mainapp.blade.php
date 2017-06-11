@@ -58,8 +58,14 @@
 						ng-repeat="contact in badgesController.contacts"
 						data-memberid="{{ contact.contact_member_id }}"
 						data-id="{{ contact.id }}"
-					   >
-						<div>{{ contact.first_name }} {{ contact.last_name }}</div>
+					>
+						<div ng-switch on="contact.is_member" >
+							<div ng-switch-when="true" class="avatar member">
+								<div><img src="contact.member.avatar"/></div>
+								<div>{{ contact.member.display_name }}</div>
+							</div>
+							<div ng-switch-default class="avatar non_member">{{ contact.first_name }} {{ contact.last_name }}</span>
+						</div>
 					</div>
 				</div>
 			</div>
