@@ -62,11 +62,11 @@ angular.module('CredlyDisplayer', ['ngAnimate'])
 	.factory('LogIn',  ['$http', function($http) {
 		var vm = this;
 		return {
-			get: function() {
+			get: function(username, password) {
 				return $http({
 					method: 'POST',
 					url: '/authenticate',
-					params: {username: vm.username, password: vm.password}
+					params: {username: username, password: password}
 				});
 			}
 		}
@@ -129,7 +129,7 @@ angular.module('CredlyDisplayer', ['ngAnimate'])
 		};
 
 		$scope.login = function() {
-			LogIn.get().then(function(res) {
+			LogIn.get(vm.username, vm.password).then(function(res) {
 console.error(res);
 				if (res.isLoggedIn) {
 					_init();

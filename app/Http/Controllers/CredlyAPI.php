@@ -28,6 +28,7 @@ class CredlyAPI extends Controller {
 			//->json(array('msg'=> $msg), 200);
 	}
 
+	// TODO: Create new middleware to do integrated Laravel authentication.
 	public function authenticate() {
 		$curl = curl_init();
 
@@ -45,18 +46,16 @@ class CredlyAPI extends Controller {
 			]
 		]);
 
-		return 'moo';
 		curl_setopt($curl, CURLOPT_USERPWD, Request::input('username') . ":" . Request::input('password'));
 		$curl_response = curl_exec($curl);
 		$err = curl_error($curl);
-
 		curl_close($curl);
 
 		if (!$err && is_string($curl_response)) {
 			$jsonResults = json_decode($curl_response);
 
 			if (json_last_error() === JSON_ERROR_NONE) {
-				if ($jsonResults->data && $jsonResults->token) {
+				if ($jsonResults->data && $jsonResults->data->token) {
 					Cookie::queue(Cookie::make('credly_token', $jsonResults->data->token, 525600));
 					return '{"isLoggedIn": true}';
 				}
@@ -125,7 +124,6 @@ class CredlyAPI extends Controller {
 
 		$curl_response = curl_exec($curl);
 		$err = curl_error($curl);
-
 		curl_close($curl);
 
 		$results = [];
