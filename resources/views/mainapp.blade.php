@@ -32,7 +32,7 @@
 					</div>
 				</form>
 			</div>
-			<div class="main_wrapper container" ng-class="{'loggedIn': uiController.isLoggedIn}">
+			<div class="main_wrapper" ng-class="{'loggedIn': uiController.isLoggedIn}">
 				<div class="columns">
 					<div
 						class="badges_column ui_column"
