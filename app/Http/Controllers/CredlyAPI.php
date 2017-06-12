@@ -46,7 +46,7 @@ class CredlyAPI extends Controller {
 
 		$results = [];
 
-		if (! $err && is_string($curl_response)) {
+		if (!$err && is_string($curl_response)) {
 			$jsonResults = json_decode($curl_response);
 
 			if (json_last_error() === JSON_ERROR_NONE) {
@@ -54,7 +54,7 @@ class CredlyAPI extends Controller {
 			}
 		}
 
-		return response()->json($results) . "https://api.credly.com/v1.1/$action?" . join('&', $args);
+		return $action!='me/contacts' ? "https://api.credly.com/v1.1/$action?" . join('&', $args) : response()->json($results);
 	}
 
 
