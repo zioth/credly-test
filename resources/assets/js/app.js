@@ -94,14 +94,14 @@ const app = new Vue({
 			 */
 			send: function(action, method, data) {
 				var params = {
-					method: method,
+					//method: method,
 					url: action,
 					params: data || {}
 				};
 				if (method == 'POST') {
 					params.headers = {'Content-Type': 'application/x-www-form-urlencoded'}
 				}
-				return $http(params);
+				return method=='GET' ? $http.get(params) : $http.post(params);
 			}
 		}
 	}
