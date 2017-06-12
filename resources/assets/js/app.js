@@ -31,10 +31,6 @@ const app = new Vue({
 
 		// Main controller
 		.controller('UIController', ['$scope', 'ApiRequest', _uiController])
-		.controller('OverviewCtrl', function($scope) {
-			$scope.list1 = {title: 'AngularJS - Drag Me'};
-			$scope.list2 = {};
-		});
 	;
 
 
@@ -73,6 +69,9 @@ const app = new Vue({
 		vm.getContacts = _getContacts.bind(vm, API);
 		vm.showBadges = _showBadges.bind(vm, API);
 		$scope.login = _login.bind(vm, API);
+
+$scope.list1 = {title: 'AngularJS - Drag Me'};
+$scope.list2 = {};
 
 		_init(vm);
 	}
