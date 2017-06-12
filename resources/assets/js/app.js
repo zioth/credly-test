@@ -42,7 +42,7 @@ const app = new Vue({
 		vm.loginFailed = false; // The last login attempt failed.
 		vm.username = '';
 		vm.password = '';
-		vm.isLoading = false;
+		vm.loadingCount;
 		vm.badges = [];
 		vm.contacts = [];
 		vm.memberBadges = {};
@@ -113,9 +113,12 @@ const app = new Vue({
 	 */
 	function _getBadges($scope, API) {
 		var vm = this;
+		if (!vm.isLoggedIn) {
+			return;
+		}
 
 		//TODO: Need seperate loading states for each action. Shared just results in a flickering UI
-		vm.isLoading = true;
+		vm.loadingCount++;
 
 		API.get('/me/badges/created', 'GET', {
 			order_direction: 'ASC',
@@ -123,14 +126,14 @@ const app = new Vue({
 			per_page: 20
 		}).then(
 			function(res) {
-				vm.isLoading = false;
+				vm.loadingCount--;
 				vm.isLoggedIn = !res.data || !res.data.meta || res.data.meta.status_code != 401;
 				if (res.data.data) {
 					vm.badges = vm.badges.concat(res.data.data);
 				}
 			},
 			function(err) {
-				vm.isLoading = false;
+				vm.loadingCount--;
 			}
 		);
 	}
@@ -145,7 +148,10 @@ const app = new Vue({
 	 */
 	function _getContacts(API) {
 		var vm = this;
-		vm.isLoading = true;
+		if (!vm.isLoggedIn) {
+			return;
+		}
+		vm.loadingCount++;
 
 		API.get('/me/contacts', 'GET', {
 			order_direction: 'ASC',
@@ -153,14 +159,14 @@ const app = new Vue({
 			per_page: 20
 		}).then(
 			function(res) {
-				vm.isLoading = false;
+				vm.loadingCount--;
 				vm.isLoggedIn = !res.data || !res.data.meta || res.data.meta.status_code != 401;
 				if (res.data.data) {
 					vm.contacts = vm.contacts.concat(res.data.data);
 				}
 			},
 			function(err) {
-				vm.isLoading = false;
+				vm.loadingCount--;
 			}
 		);
 	}
@@ -197,7 +203,6 @@ const app = new Vue({
 				}
 			},
 			function(err) {
-				vm.isLoading = false;
 			}
 		);
 	}
