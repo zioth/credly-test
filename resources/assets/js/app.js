@@ -23,7 +23,7 @@ const app = new Vue({
 (function() {
 	'use strict';
 
-	angular.module('CredlyApp', ['ngAnimate'])
+	angular.module('CredlyApp', ['ngAnimate', 'ang-drag-drop'])
 		.filter('imageFilter', _imageFilter)
 
 		// Send an API request to the Credly proxy.
