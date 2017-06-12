@@ -29,18 +29,19 @@ const app = new Vue({
 				var ret = input.replace(/(_\d+)\./, '.');
 				var endIndex = ret.lastIndexOf('.');
 				return ret.substring(0, endIndex) + '_' + size + ret.substring(endIndex);
-			}
+			};
 		})
 
-		/**
-		 * Send an API request to the Credly proxy.
-		 *
-		 * @param {String} action - The API action. For example, /contacts
-		 * @param {String} method - 'GET' or 'POST'
-		 * @param {Object=|null} - URL parameters as name:value pairs
-		 */
+		// Send an API request to the Credly proxy.
 		.factory('ApiRequest',  ['$http', function($http) {
 			return {
+				/**
+				 * Send an API request to the Credly proxy.
+				 *
+				 * @param {String} action - The API action. For example, /contacts
+				 * @param {String} method - 'GET' or 'POST'
+				 * @param {Object=|null} - URL parameters as name:value pairs
+				 */
 				get: function _apiRequest(action, method, data) {
 					var params = {
 						method: method,
@@ -53,8 +54,9 @@ const app = new Vue({
 					}
 					return $http(params);
 				}
-			}
-		}
+			};
+		})
+
 
 		// Main controller
 		.controller('UIController', ['$scope', 'ApiRequest', function($scope, API) {
@@ -156,9 +158,6 @@ const app = new Vue({
 			}
 
 			_init();
-
-			//TODO DEBUG:
-			window._DEBUGTEST = vm;
 		}]
 	);
 })();
