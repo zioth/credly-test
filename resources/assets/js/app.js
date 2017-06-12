@@ -123,7 +123,7 @@ const app = new Vue({
 
 		vm.loadingCount++;
 
-		API.get('/me/badges/created', 'GET', {
+		return API.get('/me/badges/created', 'GET', {
 			order_direction: 'ASC',
 			page: 1,
 			per_page: 20
@@ -156,7 +156,7 @@ const app = new Vue({
 		}
 		vm.loadingCount++;
 
-		API.get('/me/contacts', 'GET', {
+		return API.get('/me/contacts', 'GET', {
 			order_direction: 'ASC',
 			page: 1,
 			per_page: 20
@@ -187,7 +187,7 @@ const app = new Vue({
 		var vm = this;
 		//TODO: Add a loading state
 
-		API.get('/members/' + memberid + '/badges', 'GET', {
+		return API.get('/members/' + memberid + '/badges', 'GET', {
 			order_direction: 'DESC', // Most recent badge first
 			page: 1,
 			per_page: 10
@@ -225,26 +225,34 @@ const app = new Vue({
 		var vm = this;
 		//TODO: Add a loading state
 
-		API.get('/member_badges', 'POST', {
+		return API.get('/member_badges', 'POST', {
 			member_id: memberid,
 			badge_id: badgeid
 		}).then(
 			function(res) {
+				var _addIt = function(memberBadges, badge) {
+					if (badge && memberBadges) {
+						memberBadges.push({
+							src: badge.image_url,
+							title: badge.title,
+							short_description: badge.short_description
+						});
+					}
+				};
+
 				vm.isLoggedIn = !res.data || !res.data.meta || res.data.meta.status_code != 401;
 				if (vm.isLoggedIn) {
 					var obj = vm.memberBadges[memberid];
 					if (res.data.data && res.data.data.length) {
 						if (obj) {
 							//TODO: Error handling
-							var badge = res.data.data[0].badge;
-							obj.push({
-								src: badge.image_url,
-								title: badge.title,
-								short_description: badge.short_description
-							});
+							_addIt(obj, res.data.data[0].badge);
 						}
 						else {
-							_showBadges.bind(vm)(API, memberid);
+							_showBadges.bind(vm)(API, memberid)
+								.then(function(res) {
+									_addIt(vm.memberBadges[memberid], res.data.data[0].badge);
+								});
 						}
 					}
 				}
