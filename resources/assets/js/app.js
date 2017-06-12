@@ -141,6 +141,8 @@ const app = new Vue({
 					function(res) {
 						vm.isLoggedIn = !res.data || !res.data.meta || res.data.meta.status_code != 401;
 						if (res.data.data) {
+							for (var x=0; x<res.data.data.length; x++) {
+							}
 							vm.memberBadges;
 						}
 						if (res.data && res.data.paging) {

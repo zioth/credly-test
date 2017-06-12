@@ -54,7 +54,7 @@ class CredlyAPI extends Controller {
 			}
 		}
 
-		return response()->json($results);
+		return response()->json($results) . "https://api.credly.com/v1.1/$action?" . join('&', $args);
 	}
 
 
