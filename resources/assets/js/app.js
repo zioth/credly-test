@@ -71,7 +71,7 @@ const app = new Vue({
 		$scope.login = _login.bind(vm, API);
 
 		$scope.onDrop = function(badge, contact) {
-			_giveBadge.bind(vm, API, contact.member.id, badge.id)();
+			_giveBadge.bind(vm, API, contact.member.id, badge)();
 		};
 
 		_init(vm);
@@ -92,7 +92,7 @@ const app = new Vue({
 			 * @param {String} method - 'GET' or 'POST'
 			 * @param {Object=|null} - URL parameters as name:value pairs
 			 */
-			get: function(action, method, data) {
+			send: function(action, method, data) {
 				var params = {
 					method: method,
 					url: action,
@@ -123,7 +123,7 @@ const app = new Vue({
 
 		vm.loadingCount++;
 
-		return API.get('/me/badges/created', 'GET', {
+		return API.send('/me/badges/created', 'GET', {
 			order_direction: 'ASC',
 			page: 1,
 			per_page: 20
@@ -156,7 +156,7 @@ const app = new Vue({
 		}
 		vm.loadingCount++;
 
-		return API.get('/me/contacts', 'GET', {
+		return API.send('/me/contacts', 'GET', {
 			order_direction: 'ASC',
 			page: 1,
 			per_page: 20
@@ -187,7 +187,7 @@ const app = new Vue({
 		var vm = this;
 		//TODO: Add a loading state
 
-		return API.get('/members/' + memberid + '/badges', 'GET', {
+		return API.send('/members/' + memberid + '/badges', 'GET', {
 			order_direction: 'DESC', // Most recent badge first
 			page: 1,
 			per_page: 10
@@ -221,13 +221,15 @@ const app = new Vue({
 	 *
 	 * Scope: uiController
 	 */
-	function _giveBadge(API, memberid, badgeid) {
+	//TODO: This function doesn't actually work. The /member_badges POST fetches the current list of badges rather than giving one.
+	//      I'm probably misinterpreting the API.
+	function _giveBadge(API, memberid, badge) {
 		var vm = this;
 		//TODO: Add a loading state
 
-		return API.get('/member_badges', 'POST', {
+		return API.send('/member_badges', 'POST', {
 			member_id: memberid,
-			badge_id: badgeid
+			badge_id: badge.id
 		}).then(
 			function(res) {
 				var _addIt = function(memberBadges, badge) {
@@ -246,12 +248,13 @@ const app = new Vue({
 					if (res.data.data && res.data.data.length) {
 						if (obj) {
 							//TODO: Error handling
-							_addIt(obj, res.data.data[0].badge);
+							//TODO: res.data.data[0].badge is the member's first badge, not the one just added.
+							_addIt(obj, badge);
 						}
 						else {
 							_showBadges.bind(vm)(API, memberid)
 								.then(function() {
-									_addIt(vm.memberBadges[memberid], res.data.data[0].badge);
+									_addIt(vm.memberBadges[memberid], badge);
 								});
 						}
 					}
@@ -272,7 +275,7 @@ const app = new Vue({
 	function _login(API) {
 		var vm = this;
 		//TODO BUG: Why do username&password get appended to the URL? Angular docs say that $http() doesn't work like that.
-		API.get('/authenticate', 'POST', {username:vm.username, password:vm.password}).then(function(res) {
+		API.send('/authenticate', 'POST', {username:vm.username, password:vm.password}).then(function(res) {
 			if (res.data && res.data.isLoggedIn) {
 				// Reset the app, including the logged in state.
 				_init(vm);
