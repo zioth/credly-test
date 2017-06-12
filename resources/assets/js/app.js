@@ -42,7 +42,7 @@ const app = new Vue({
 		vm.loginFailed = false; // The last login attempt failed.
 		vm.username = '';
 		vm.password = '';
-		vm.loadingCount;
+		vm.loadingCount = 0;
 		vm.badges = [];
 		vm.contacts = [];
 		vm.memberBadges = {};
