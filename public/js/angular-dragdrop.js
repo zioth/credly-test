@@ -1,29 +1,471 @@
-/**
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to
- * deal in the Software without restriction, including without limitation the
- * rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
- * sell copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
- * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
- * IN THE SOFTWARE.
- */
+/* From https://github.com/angular-dragdrop/angular-dragdrop */
 
-/**
- * Implementing Drag and Drop functionality in AngularJS is easier than ever.
- * Demo: http://codef0rmer.github.com/angular-dragdrop/
- *
- * @version 1.0.13
- *
- * (c) 2013 Amit Gharat a.k.a codef0rmer <amit.2006.it@gmail.com> - amitgharat.wordpress.com
- */
-!function(e,a,t,n){"use strict";var i=a.module("ngDragDrop",[]).service("ngDragDropService",["$timeout","$parse","$q",function(r,l,o){this.draggableScope=null,this.droppableScope=null,t("head").prepend('<style type="text/css">@charset "UTF-8";.angular-dragdrop-hide{display: none !important;}</style>'),this.callEventCallback=function(e,a,n,i){function r(a){var n=-1!==a.indexOf("(")?a.indexOf("("):a.length,i=-1!==a.lastIndexOf(")")?a.lastIndexOf(")"):a.length,r=a.substring(n+1,i),o=-1!==a.indexOf(".")?a.substr(0,a.indexOf(".")):null;return o=e[o]&&"function"==typeof e[o].constructor?o:null,{callback:a.substring(o&&o.length+1||0,n),args:t.map(r&&r.split(",")||[],function(a){return[l(a)(e)]}),constructor:o}}if(a){var o=r(a),d=o.callback,s=o.constructor,p=[n,i].concat(o.args);return(e[d]||e[s][d]).apply(e[d]?e:e[s],p)}},this.invokeDrop=function(e,l,d,s){var p,c,u,g="",f="",b={},h={},v=null,y={},x={},m=null,D=this.droppableScope,q=this.draggableScope,j=null,k=[];g=e.ngattr("ng-model"),f=l.ngattr("ng-model"),p=q.$eval(g),c=D.$eval(f),m=l.find("[jqyoui-draggable]:last,[data-jqyoui-draggable]:last"),h=D.$eval(l.attr("jqyoui-droppable")||l.attr("data-jqyoui-droppable"))||[],b=q.$eval(e.attr("jqyoui-draggable")||e.attr("data-jqyoui-draggable"))||[],b.index=this.fixIndex(q,b,p),h.index=this.fixIndex(D,h,c),v=a.isArray(p)?b.index:null,y=a.isArray(p)?p[v]:p,b.deepCopy&&(y=a.copy(y)),x=a.isArray(c)&&h&&h.index!==n?c[h.index]:a.isArray(c)?{}:c,h.deepCopy&&(x=a.copy(x)),b.beforeDrop&&k.push(this.callEventCallback(q,b.beforeDrop,d,s)),o.all(k).then(a.bind(this,function(){if(b.insertInline&&g===f){if(b.index>h.index){u=p[b.index];for(var n=b.index;n>h.index;n--)c[n]=a.copy(c[n-1]),c[n-1]={},c[n][b.direction]="left";c[h.index]=u}else{u=p[b.index];for(var n=b.index;n<h.index;n++)c[n]=a.copy(c[n+1]),c[n+1]={},c[n][b.direction]="right";c[h.index]=u}this.callEventCallback(D,h.onDrop,d,s)}else b.animate===!0?(j=e.clone(),j.css({position:"absolute"}).css(e.offset()),t("body").append(j),e.addClass("angular-dragdrop-hide"),this.move(j,m.length>0?m:l,null,"fast",h,function(){j.remove()}),this.move(m.length>0&&!h.multiple?m:[],e.parent("[jqyoui-droppable],[data-jqyoui-droppable]"),i.startXY,"fast",h,a.bind(this,function(){r(a.bind(this,function(){e.css({position:"relative",left:"",top:""}).removeClass("angular-dragdrop-hide"),m.css({position:"relative",left:"",top:"",display:"none"===m.css("display")?"":m.css("display")}),this.mutateDraggable(q,h,b,g,f,x,e),this.mutateDroppable(D,h,b,f,y,v),this.callEventCallback(D,h.onDrop,d,s)}))}))):r(a.bind(this,function(){this.mutateDraggable(q,h,b,g,f,x,e),this.mutateDroppable(D,h,b,f,y,v),this.callEventCallback(D,h.onDrop,d,s)}))}))["finally"](a.bind(this,function(){this.restore(e)}))},this.move=function(a,t,i,r,l,o){if(0===a.length)return o&&e.setTimeout(function(){o()},300),!1;var d=a.css("z-index"),s=a[l.containment||"offset"](),p=t.css("display"),c=t.hasClass("ng-hide"),u=t.hasClass("angular-dragdrop-hide");null===i&&t.length>0&&((t.attr("jqyoui-draggable")||t.attr("data-jqyoui-draggable"))!==n&&t.ngattr("ng-model")!==n&&t.is(":visible")&&l&&l.multiple?(i=t[l.containment||"offset"](),l.stack===!1?i.left+=t.outerWidth(!0):i.top+=t.outerHeight(!0)):(c&&t.removeClass("ng-hide"),u&&t.removeClass("angular-dragdrop-hide"),i=t.css({visibility:"hidden",display:"block"})[l.containment||"offset"](),t.css({visibility:"",display:p}))),a.css({position:"absolute","z-index":9999}).css(s).animate(i,r,function(){c&&t.addClass("ng-hide"),u&&t.addClass("angular-dragdrop-hide"),a.css("z-index",d),o&&o()})},this.mutateDroppable=function(e,t,n,i,r,o){var d=e.$eval(i);e.dndDragItem=r,a.isArray(d)?(t&&t.index>=0?d[t.index]=r:d.push(r),n&&n.placeholder===!0&&(d[d.length-1].jqyoui_pos=o)):(l(i+" = dndDragItem")(e),n&&n.placeholder===!0&&(d.jqyoui_pos=o))},this.mutateDraggable=function(e,t,i,r,o,d,s){var p=a.equals(d,{})||!d,c=e.$eval(r);e.dndDropItem=d,i&&i.placeholder?"keep"!=i.placeholder&&(a.isArray(c)&&i.index!==n?c[i.index]=d:l(r+" = dndDropItem")(e)):a.isArray(c)?p?i&&i.placeholder!==!0&&"keep"!==i.placeholder&&c.splice(i.index,1):c[i.index]=d:(l(r+" = dndDropItem")(e),e.$parent&&l(r+" = dndDropItem")(e.$parent)),this.restore(s)},this.restore=function(e){e.css({"z-index":"",left:"",top:""})},this.fixIndex=function(e,t,i){if(t.applyFilter&&a.isArray(i)&&i.length>0){var r=e[t.applyFilter](),l=r[t.index],o=n;return i.forEach(function(e,t){a.equals(e,l)&&(o=t)}),o}return t.index}}]).directive("jqyouiDraggable",["ngDragDropService",function(e){return{require:"?jqyouiDroppable",restrict:"A",link:function(n,r,l){var o,d,s,p,c=t(r),u=function(r,u){r?(o=n.$eval(c.attr("jqyoui-draggable")||c.attr("data-jqyoui-draggable"))||{},d=n.$eval(l.jqyouiOptions)||{},c.draggable({disabled:!1}).draggable(d).draggable({start:function(a,r){e.draggableScope=n,s=t(d.helper?r.helper:this).css("z-index"),t(d.helper?r.helper:this).css("z-index",9999),i.startXY=t(this)[o.containment||"offset"](),e.callEventCallback(n,o.onStart,a,r)},stop:function(a,i){t(d.helper?i.helper:this).css("z-index",s),e.callEventCallback(n,o.onStop,a,i)},drag:function(a,t){e.callEventCallback(n,o.onDrag,a,t)}})):c.draggable({disabled:!0}),p&&a.isDefined(r)&&(a.equals(l.drag,"true")||a.equals(l.drag,"false"))&&(p(),p=null)};p=n.$watch(function(){return n.$eval(l.drag)},u),u(),c.on("$destroy",function(){c.draggable({disabled:!0}).draggable("destroy")})}}}]).directive("jqyouiDroppable",["ngDragDropService","$q",function(e,n){return{restrict:"A",priority:1,link:function(i,r,l){var o,d,s,p=t(r),c=function(r,c){r?(o=i.$eval(t(p).attr("jqyoui-droppable")||t(p).attr("data-jqyoui-droppable"))||{},d=i.$eval(l.jqyouiOptions)||{},p.droppable({disabled:!1}).droppable(d).droppable({over:function(a,t){e.callEventCallback(i,o.onOver,a,t)},out:function(a,t){e.callEventCallback(i,o.onOut,a,t)},drop:function(r,s){var p=null;p=o.beforeDrop?e.callEventCallback(i,o.beforeDrop,r,s):function(){var e=n.defer();return e.resolve(),e.promise}(),p.then(a.bind(this,function(){t(s.draggable).ngattr("ng-model")&&l.ngModel?(e.droppableScope=i,e.invokeDrop(t(s.draggable),t(this),r,s)):e.callEventCallback(i,o.onDrop,r,s)}),function(){s.draggable.animate({left:"",top:""},d.revertDuration||0)})}})):p.droppable({disabled:!0}),s&&a.isDefined(r)&&(a.equals(l.drop,"true")||a.equals(l.drop,"false"))&&(s(),s=null)};s=i.$watch(function(){return i.$eval(l.drop)},c),c(),p.on("$destroy",function(){p.droppable({disabled:!0}).droppable("destroy")})}}}]);t.fn.ngattr=function(e,a){var t=this[0];return t.getAttribute(e)||t.getAttribute("data-"+e)}}(window,window.angular,window.jQuery);
+(function(angular) {
+	'use strict';
+
+	function isDnDsSupported() {
+		return 'ondrag' in document.createElement('a');
+	}
+
+	function determineEffectAllowed(e) {
+		if(e.originalEvent) {
+		  e.dataTransfer = e.originalEvent.dataTransfer;
+		}
+
+		// Chrome doesn't set dropEffect, so we have to work it out ourselves
+		if (typeof e.dataTransfer !== 'undefined' && e.dataTransfer.dropEffect === 'none') {
+			if (e.dataTransfer.effectAllowed === 'copy' ||
+				e.dataTransfer.effectAllowed === 'move') {
+				e.dataTransfer.dropEffect = e.dataTransfer.effectAllowed;
+			} else if (e.dataTransfer.effectAllowed === 'copyMove' || e.dataTransfer.effectAllowed === 'copymove') {
+				e.dataTransfer.dropEffect = e.ctrlKey ? 'copy' : 'move';
+			}
+		}
+	}
+
+	if (!isDnDsSupported()) {
+		angular.module('ang-drag-drop', []);
+		return;
+	}
+
+	var module = angular.module('ang-drag-drop', []);
+
+	module.directive('uiDraggable', ['$parse', '$rootScope', '$dragImage', function($parse, $rootScope, $dragImage) {
+		return function(scope, element, attrs) {
+			var isDragHandleUsed = false,
+				dragHandleClass,
+				draggingClass = attrs.draggingClass || 'on-dragging',
+				dragTarget;
+
+			element.attr('draggable', false);
+
+			scope.$watch(attrs.uiDraggable, function(newValue) {
+				if (newValue) {
+					element.attr('draggable', newValue);
+					element.bind('dragend', dragendHandler);
+					element.bind('dragstart', dragstartHandler);
+				}
+				else {
+					element.removeAttr('draggable');
+					element.unbind('dragend', dragendHandler);
+					element.unbind('dragstart', dragstartHandler);
+				}
+
+			});
+
+			if (angular.isString(attrs.dragHandleClass)) {
+				isDragHandleUsed = true;
+				dragHandleClass = attrs.dragHandleClass.trim() || 'drag-handle';
+
+				element.bind('mousedown', function(e) {
+					dragTarget = e.target;
+				});
+			}
+
+			function dragendHandler(e) {
+				if(e.originalEvent) {
+				  e.dataTransfer = e.originalEvent.dataTransfer;
+				}
+
+				setTimeout(function() {
+					element.unbind('$destroy', dragendHandler);
+				}, 0);
+				var sendChannel = attrs.dragChannel || 'defaultchannel';
+				$rootScope.$broadcast('ANGULAR_DRAG_END', e, sendChannel);
+
+				determineEffectAllowed(e);
+
+				if (e.dataTransfer && e.dataTransfer.dropEffect !== 'none') {
+					if (attrs.onDropSuccess) {
+						var onDropSuccessFn = $parse(attrs.onDropSuccess);
+						scope.$evalAsync(function() {
+							onDropSuccessFn(scope, {$event: e});
+						});
+					}
+				}else if (e.dataTransfer && e.dataTransfer.dropEffect === 'none'){
+					if (attrs.onDropFailure) {
+						var onDropFailureFn = $parse(attrs.onDropFailure);
+						scope.$evalAsync(function() {
+							onDropFailureFn(scope, {$event: e});
+						});
+					}
+				}
+				element.removeClass(draggingClass);
+			}
+
+			function setDragElement(e, dragImageElementId) {
+				var dragImageElementFn;
+
+				if(e.originalEvent) {
+				  e.dataTransfer = e.originalEvent.dataTransfer;
+				}
+
+				dragImageElementFn = $parse(dragImageElementId);
+
+				scope.$apply(function() {
+					var elementId = dragImageElementFn(scope, {$event: e}),
+						dragElement;
+
+					if (!(elementId && angular.isString(elementId))) {
+						return;
+					}
+
+					dragElement = document.getElementById(elementId);
+
+					if (!dragElement) {
+						return;
+					}
+
+					e.dataTransfer.setDragImage(dragElement, 0, 0);
+				});
+			}
+
+			function dragstartHandler(e) {
+				if(e.originalEvent) {
+				  e.dataTransfer = e.originalEvent.dataTransfer;
+				}
+
+				var isDragAllowed = !isDragHandleUsed || dragTarget.classList.contains(dragHandleClass);
+
+				if (isDragAllowed) {
+					var sendChannel = attrs.dragChannel || 'defaultchannel';
+					var dragData = '';
+					if (attrs.drag) {
+						dragData = scope.$eval(attrs.drag);
+					}
+
+					var dragImage = attrs.dragImage || null;
+
+					element.addClass(draggingClass);
+					element.bind('$destroy', dragendHandler);
+
+					//Code to make sure that the setDragImage is available. IE 10, 11, and Opera do not support setDragImage.
+					var hasNativeDraggable = !(document.uniqueID || window.opera);
+
+					//If there is a draggable image passed in, then set the image to be dragged.
+					if (dragImage && hasNativeDraggable) {
+						var dragImageFn = $parse(attrs.dragImage);
+						scope.$apply(function() {
+							var dragImageParameters = dragImageFn(scope, {$event: e});
+							if (dragImageParameters) {
+								if (angular.isString(dragImageParameters)) {
+									dragImageParameters = $dragImage.generate(dragImageParameters);
+								}
+								if (dragImageParameters.image) {
+									var xOffset = dragImageParameters.xOffset || 0,
+										yOffset = dragImageParameters.yOffset || 0;
+									e.dataTransfer.setDragImage(dragImageParameters.image, xOffset, yOffset);
+								}
+							}
+						});
+					} else if (attrs.dragImageElementId) {
+						setDragElement(e, attrs.dragImageElementId);
+					}
+
+					var offset = {x: e.offsetX, y: e.offsetY};
+					var transferDataObject = {data: dragData, channel: sendChannel, offset: offset};
+					var transferDataText = angular.toJson(transferDataObject);
+
+					e.dataTransfer.setData('text', transferDataText);
+					e.dataTransfer.effectAllowed = 'copyMove';
+					
+					
+					if (attrs.onDragStart) {
+						var onDragStartFn = $parse(attrs.onDragStart);
+						scope.$evalAsync(function () {
+							onDragStartFn(scope, {
+								$event: e
+							});
+						});
+					}
+
+					$rootScope.$broadcast('ANGULAR_DRAG_START', e, sendChannel, transferDataObject);
+				}
+				else {
+					e.preventDefault();
+				}
+			}
+		};
+	}
+	]);
+
+	module.directive('uiOnDrop', ['$parse', '$rootScope', function($parse, $rootScope) {
+		return function(scope, element, attr) {
+			var dragging = 0; //Ref. http://stackoverflow.com/a/10906204
+			var dropChannel = attr.dropChannel || 'defaultchannel';
+			var dragChannel = '';
+			var dragEnterClass = attr.dragEnterClass || 'on-drag-enter';
+			var dragHoverClass = attr.dragHoverClass || 'on-drag-hover';
+			var customDragEnterEvent = $parse(attr.onDragEnter);
+			var customDragLeaveEvent = $parse(attr.onDragLeave);
+
+			function calculateDropOffset(e) {
+				var offset = {
+					x: e.offsetX,
+					y: e.offsetY
+				};
+				var target = e.target;
+
+				while (target !== element[0]) {
+					offset.x = offset.x + target.offsetLeft;
+					offset.y = offset.y + target.offsetTop;
+
+					target = target.offsetParent;
+					if (!target) {
+						return null;
+					}
+				}
+
+				return offset;
+			}
+
+			function onDragOver(e) {
+				if (e.preventDefault) {
+					e.preventDefault(); // Necessary. Allows us to drop.
+				}
+
+				if (e.stopPropagation) {
+					e.stopPropagation();
+				}
+
+				var uiOnDragOverFn = $parse(attr.uiOnDragOver);
+				scope.$evalAsync(function() {
+					uiOnDragOverFn(scope, {$event: e, $channel: dropChannel});
+				});
+
+				return false;
+			}
+
+			function onDragLeave(e) {
+				if (e.preventDefault) {
+					e.preventDefault();
+				}
+
+				if (e.stopPropagation) {
+					e.stopPropagation();
+				}
+				dragging--;
+
+				if (dragging === 0) {
+					scope.$evalAsync(function() {
+						customDragLeaveEvent(scope, {$event: e, $channel: dropChannel});
+					});
+					element.addClass(dragEnterClass);
+					element.removeClass(dragHoverClass);
+				}
+
+				var uiOnDragLeaveFn = $parse(attr.uiOnDragLeave);
+				scope.$evalAsync(function() {
+					uiOnDragLeaveFn(scope, {$event: e, $channel: dropChannel});
+				});
+			}
+
+			function onDragEnter(e) {
+				if (e.preventDefault) {
+					e.preventDefault();
+				}
+
+				if (e.stopPropagation) {
+					e.stopPropagation();
+				}
+
+				if (dragging === 0) {
+					scope.$evalAsync(function() {
+						customDragEnterEvent(scope, {$event: e, $channel: dropChannel});
+					});
+					element.removeClass(dragEnterClass);
+					element.addClass(dragHoverClass);
+				}
+				dragging++;
+
+				var uiOnDragEnterFn = $parse(attr.uiOnDragEnter);
+				scope.$evalAsync(function() {
+					uiOnDragEnterFn(scope, {$event: e, $channel: dropChannel});
+				});
+
+				$rootScope.$broadcast('ANGULAR_HOVER', dragChannel);
+			}
+
+			function onDrop(e) {
+				if(e.originalEvent) {
+				  e.dataTransfer = e.originalEvent.dataTransfer;
+				}
+
+				if (e.preventDefault) {
+					e.preventDefault(); // Necessary. Allows us to drop.
+				}
+				if (e.stopPropagation) {
+					e.stopPropagation(); // Necessary. Allows us to drop.
+				}
+
+				var sendData = e.dataTransfer.getData('text');
+				sendData = angular.fromJson(sendData);
+
+				var dropOffset = calculateDropOffset(e);
+				
+				var position = dropOffset ? {
+					x: dropOffset.x - sendData.offset.x,
+					y: dropOffset.y - sendData.offset.y
+				} : null;
+				
+				determineEffectAllowed(e);
+
+				var uiOnDropFn = $parse(attr.uiOnDrop);
+				scope.$evalAsync(function() {
+					uiOnDropFn(scope, {$data: sendData.data, $event: e, $channel: sendData.channel, $position: position});
+				});
+				element.removeClass(dragEnterClass);
+				dragging = 0;
+			}
+			
+			function isDragChannelAccepted(dragChannel, dropChannel) {
+				if (dropChannel === '*') {
+					return true;
+				}
+
+				var channelMatchPattern = new RegExp('(\\s|[,])+(' + dragChannel + ')(\\s|[,])+', 'i');
+
+				return channelMatchPattern.test(',' + dropChannel + ',');
+			}
+
+			function preventNativeDnD(e) {
+				if(e.originalEvent) {
+				  e.dataTransfer = e.originalEvent.dataTransfer;
+				}
+
+				if (e.preventDefault) {
+					e.preventDefault();
+				}
+				if (e.stopPropagation) {
+					e.stopPropagation();
+				}
+				e.dataTransfer.dropEffect = 'none';
+				return false;
+			}
+
+			var deregisterDragStart = $rootScope.$on('ANGULAR_DRAG_START', function(_, e, channel, transferDataObject) {
+				dragChannel = channel;
+
+				var valid = true;
+
+				if (!isDragChannelAccepted(channel, dropChannel)) {
+					valid = false;
+				}
+
+				if (valid && attr.dropValidate) {
+					var validateFn = $parse(attr.dropValidate);
+					valid = validateFn(scope, {
+						$drop: {scope: scope, element: element},
+						$event: e,
+						$data: transferDataObject.data,
+						$channel: transferDataObject.channel
+					});
+				}
+
+				if (valid) {
+					element.bind('dragover', onDragOver);
+					element.bind('dragenter', onDragEnter);
+					element.bind('dragleave', onDragLeave);
+					element.bind('drop', onDrop);
+
+					element.addClass(dragEnterClass);
+				} else {
+					element.bind('dragover', preventNativeDnD);
+					element.bind('dragenter', preventNativeDnD);
+					element.bind('dragleave', preventNativeDnD);
+					element.bind('drop', preventNativeDnD);
+
+					element.removeClass(dragEnterClass);
+				}
+
+			});
+
+
+			var deregisterDragEnd = $rootScope.$on('ANGULAR_DRAG_END', function() {
+				element.unbind('dragover', onDragOver);
+				element.unbind('dragenter', onDragEnter);
+				element.unbind('dragleave', onDragLeave);
+
+				element.unbind('drop', onDrop);
+				element.removeClass(dragHoverClass);
+				element.removeClass(dragEnterClass);
+
+				element.unbind('dragover', preventNativeDnD);
+				element.unbind('dragenter', preventNativeDnD);
+				element.unbind('dragleave', preventNativeDnD);
+				element.unbind('drop', preventNativeDnD);
+			});
+
+			scope.$on('$destroy', function() {
+				deregisterDragStart();
+				deregisterDragEnd();
+			});
+
+
+			attr.$observe('dropChannel', function(value) {
+				if (value) {
+					dropChannel = value;
+				}
+			});
+
+
+		};
+	}
+	]);
+
+	module.constant('$dragImageConfig', {
+		height: 20,
+		width: 200,
+		padding: 10,
+		font: 'bold 11px Arial',
+		fontColor: '#eee8d5',
+		backgroundColor: '#93a1a1',
+		xOffset: 0,
+		yOffset: 0
+	});
+
+	module.service('$dragImage', ['$dragImageConfig', function(defaultConfig) {
+		var ELLIPSIS = '…';
+
+		function fitString(canvas, text, config) {
+			var width = canvas.measureText(text).width;
+			if (width < config.width) {
+				return text;
+			}
+			while (width + config.padding > config.width) {
+				text = text.substring(0, text.length - 1);
+				width = canvas.measureText(text + ELLIPSIS).width;
+			}
+			return text + ELLIPSIS;
+		}
+
+		this.generate = function(text, options) {
+			var config = angular.extend({}, defaultConfig, options || {});
+			var el = document.createElement('canvas');
+
+			el.height = config.height;
+			el.width = config.width;
+
+			var canvas = el.getContext('2d');
+
+			canvas.fillStyle = config.backgroundColor;
+			canvas.fillRect(0, 0, config.width, config.height);
+			canvas.font = config.font;
+			canvas.fillStyle = config.fontColor;
+
+			var title = fitString(canvas, text, config);
+			canvas.fillText(title, 4, config.padding + 4);
+
+			var image = new Image();
+			image.src = el.toDataURL();
+
+			return {
+				image: image,
+				xOffset: config.xOffset,
+				yOffset: config.yOffset
+			};
+		};
+	}
+	]);
+
+}(angular));
