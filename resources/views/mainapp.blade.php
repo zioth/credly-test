@@ -89,7 +89,7 @@
 								<div ng-switch-when="true" class="badges">
 									<img
 										class="cbadge"
-										ng-src="{{ badge }}"
+										ng-src="{{ badge.src }}"
 										ng-attr-title="{{ badge.title }} : {{ badge.short_description }}"
 										ng-repeat="badge in uiController.memberBadges[contact.contact_member_id]"
 									/>

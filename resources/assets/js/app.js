@@ -143,7 +143,12 @@ const app = new Vue({
 						if (res.data.data && res.data.data.length) {
 							var obj = vm.memberBadges[res.data.data[0].member_id] = [];
 							for (var x=0; x<res.data.data.length; x++) {
-								obj.push(res.data.data[x].badge.image_url);
+								var badge = res.data.data[x].badge;
+								obj.push({
+									src: badge.image_url,
+									title: badge.title,
+									short_description: badge.short_description
+								});
 							}
 						}
 					},
