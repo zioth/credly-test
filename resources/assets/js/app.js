@@ -71,8 +71,6 @@ const app = new Vue({
 		$scope.login = _login.bind(vm, API);
 
 		$scope.onDrop = function(badge, contact) {
-			// TODO: add badge, then fetch if !exist.
-			// member_id, badge_id
 			_giveBadge.bind(vm, API, contact.member.id, badge.id)();
 		};
 
@@ -228,8 +226,8 @@ const app = new Vue({
 		//TODO: Add a loading state
 
 		API.get('/member_badges', 'POST', {
-			member_id: member_id,
-			badge_id: badge_id
+			member_id: memberid,
+			badge_id: badgeid
 		}).then(
 			function(res) {
 				vm.isLoggedIn = !res.data || !res.data.meta || res.data.meta.status_code != 401;
