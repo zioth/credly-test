@@ -140,8 +140,8 @@ const app = new Vue({
 				}).then(
 					function(res) {
 						vm.isLoggedIn = !res.data || !res.data.meta || res.data.meta.status_code != 401;
-						if (res.data.data) {
-							var obj = vm.memberBadges[res.data.data[x].member_id] = [];
+						if (res.data.data && res.data.data.length) {
+							var obj = vm.memberBadges[res.data.data[0].member_id] = [];
 							for (var x=0; x<res.data.data.length; x++) {
 								obj.push(res.data.data[x].badge.image_url);
 							}
