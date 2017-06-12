@@ -25,8 +25,8 @@ Route::get('/me/badges/created', function(CredlyAPI $api) {
 Route::get('/me/contacts', function(CredlyAPI $api) {
 	return $api->proxy('me/contacts');
 });
-Route::get('/members/{id}/badges', function($id) {
-	return CredlyAPI::proxy('members/' + $id + '/badges');
+Route::get('/members/{id}/badges', function(CredlyAPI $api, $id) {
+	return $api->proxy('members/' + $id + '/badges');
 });
 Route::post('/authenticate', function(CredlyAPI $api) {
 	return $api->authenticate();
