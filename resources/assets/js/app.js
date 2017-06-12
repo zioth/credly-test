@@ -70,33 +70,13 @@ const app = new Vue({
 		vm.showBadges = _showBadges.bind(vm, API);
 		$scope.login = _login.bind(vm, API);
 
-$scope.dropValidateHandler = function($drop, $event, $data) {
-	if ($drop.element[0] === $event.srcElement.parentNode) {
-		// Don't allow moving to same container
-		return false;
-	}
-	return true;
-};
-
-$scope.dropSuccessHandler = function($event, index, array) {
-	array.splice(index, 1);
-};
-
-$scope.dropFailureHandler = function($event, index, array) {
-	alert(array[index] + ' could be dropped into left list!')
-};
-
-$scope.onDrop = function($event, $data, array, index) {
-	if (index !== undefined) {
-		array.splice(index, 0, $data);
-	} else {
-		array.push($data);
-	}
-};
-
-$scope.getCustomDragElementId = function (index) {
-	return 'customDrag' + (index % 2);
-}
+		$scope.onDrop = function(badge, contact) {
+			vm.memberBadges[contact.member_id].push({
+				src: badge.image_url,
+				title: badge.title,
+				short_description: badge.short_description
+			});
+		};
 
 		_init(vm);
 	}
