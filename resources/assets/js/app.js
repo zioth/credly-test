@@ -73,11 +73,7 @@ const app = new Vue({
 		$scope.onDrop = function(badge, contact) {
 			// TODO: add badge, then fetch if !exist.
 			// member_id, badge_id
-			vm.memberBadges[contact.member_id].push({
-				src: badge.image_url,
-				title: badge.title,
-				short_description: badge.short_description
-			});
+			_giveBadge.bind(vm, API, contact.member.id, badge.id);
 		};
 
 		_init(vm);
