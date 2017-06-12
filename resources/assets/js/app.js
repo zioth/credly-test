@@ -33,7 +33,7 @@ const app = new Vue({
 		})
 
 		// Send an API request to the Credly proxy.
-		.factory('ApiRequest',  ['$http', function($http) {
+		.factory('ApiRequest',  ['$http'], function($http) {
 			return {
 				/**
 				 * Send an API request to the Credly proxy.
