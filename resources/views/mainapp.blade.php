@@ -36,9 +36,9 @@
 				<div class="columns">
 					<div
 						class="badges_column ui_column"
-						event-name="loadMoreBadges"
 						ng-class="{'loading': uiController.isLoading}"
 						>
+						<div class="app_subtitle">My Created Badges</div>
 						<a
 							class="badge_image"
 							href="https://credly.com/recipients/{{ badge.id }}"
@@ -67,6 +67,7 @@
 						class="contacts_column ui_column"
 						event-name="loadMoreContacts"
 						ng-class="{'loading': uiController.isLoading}">
+						<div class="app_subtitle">My Contacts</div>
 						<div
 							class="member_box"
 							ng-class="{'is_member': contact.is_member}"
