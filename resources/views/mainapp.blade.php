@@ -165,7 +165,7 @@
 									<img
 										class="badge"
 										ng-src="{{ badge.image }}"
-										ng-repeat="badge in uiController.memberBadges[contact.id]"
+										ng-repeat="badge in uiController.memberBadges[contact.contact_member_id]"
 									/>
 								</div>
 								<div ng-switch-default class="show_badges" ng-click="uiController.showBadges(contact.id)">
