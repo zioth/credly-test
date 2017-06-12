@@ -77,7 +77,11 @@
 			.member_badges {
 				bottom: 0;
 			}
-			.member_badges .badges .badge {
+			.member_badges .badges {
+				width: 100%;
+				height: 100%;
+			}
+			.member_badges .badges .cbadge {
 				height: 18px;
 				width: 18px;
 				float: left;
@@ -163,7 +167,7 @@
 							<div ng-switch on="!!uiController.memberBadges[contact.contact_member_id]" class="member_badges member_overlay">
 								<div ng-switch-when="true" class="badges">
 									<img
-										class="badge"
+										class="cbadge"
 										ng-src="{{ badge }}"
 										ng-repeat="badge in uiController.memberBadges[contact.contact_member_id]"
 									/>
