@@ -141,7 +141,7 @@ const app = new Vue({
 					function(res) {
 						vm.isLoggedIn = !res.data || !res.data.meta || res.data.meta.status_code != 401;
 						if (res.data.data) {
-							vm.contacts = vm.contacts.concat(res.data.data);
+							vm.memberBadges;
 						}
 						if (res.data && res.data.paging) {
 							$scope.noMore = vm.contacts.length >= res.data.paging.total_results;
@@ -181,6 +181,7 @@ const app = new Vue({
 				vm.isLoading = false;
 				vm.badges = [];
 				vm.contacts = [];
+				vm.memberBadges = {};
 				vm.getBadges();
 				vm.getContacts();
 			}

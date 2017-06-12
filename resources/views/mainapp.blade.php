@@ -52,18 +52,18 @@
 			}
 			.member_overlay {
 				position: absolute;
-				height: 24px;
+				height: 28px;
 				width: 100%;
 				background-color: rgba(0, 0, 0, .75);
 				overflow: hidden;
 				color: #FFF;
-			}
-			.member_box .display_name {
-				top: 0;
 				font-weight: bold;
 				padding: 0 4px;
 				line-height: 24px;
 				text-align: center;
+			}
+			.member_box .display_name {
+				top: 0;
 			}
 
 			.main-wrapper:not(.loggedIn),
@@ -71,6 +71,9 @@
 				display: none;
 			}
 
+			.show_badges {
+				cursor: pointer;
+			}
 			.member_badges {
 				bottom: 0;
 			}
@@ -145,8 +148,6 @@
 							class="member_box"
 							ng-class="{'is_member': contact.is_member}"
 							ng-repeat="contact in uiController.contacts"
-							data-memberid="{{ contact.contact_member_id }}"
-							data-id="{{ contact.id }}"
 						>
 							<div ng-switch on="contact.is_member" >
 								<div ng-switch-when="true">
@@ -159,14 +160,12 @@
 								</div>
 							</div>
 
-							<div ng-switch on="contact.loadedBadges" class="member_badges member_overlay">
+							<div ng-switch on="!!uiController.memberBadges[contact.id]" class="member_badges member_overlay">
 								<div ng-switch-when="true" class="badges">
 									<img
 										class="badge"
 										ng-src="{{ badge.image }}"
-										ng-repeat="badge in contact.badges"
-										data-memberid="{{ contact.contact_member_id }}"
-										data-id="{{ contact.id }}"
+										ng-repeat="badge in uiController.memberBadges[contact.id]"
 									/>
 								</div>
 								<div ng-switch-default class="show_badges" ng-click="uiController.showBadges(contact.id)">
