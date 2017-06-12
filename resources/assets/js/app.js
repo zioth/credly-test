@@ -35,6 +35,23 @@ const app = new Vue({
 
 
 	/**
+	 * Initialize data, and fetch JSON to render UI.
+	 */
+	function _init(vm) {
+		vm.isLoggedIn = true; // innocent until proven guilty.
+		vm.loginFailed = false; // The last login attempt failed.
+		vm.username = '';
+		vm.password = '';
+		vm.isLoading = false;
+		vm.badges = [];
+		vm.contacts = [];
+		vm.memberBadges = {};
+		vm.getBadges();
+		vm.getContacts();
+	}
+
+
+	/**
 	 * Main controller
 	 *
 	 * @param {Object} $scope - Angular scope
@@ -42,23 +59,6 @@ const app = new Vue({
 	 */
 	function _uiController($scope, API) {
 		var vm = this;
-
-		/**
-		 * Initialize data, and fetch JSON to render UI.
-		 * This function is kept inline to make it clear which members are available in the uiController object
-		 */
-		function _init() {
-			vm.isLoggedIn = true; // innocent until proven guilty.
-			vm.loginFailed = false; // The last login attempt failed.
-			vm.username = '';
-			vm.password = '';
-			vm.isLoading = false;
-			vm.badges = [];
-			vm.contacts = [];
-			vm.memberBadges = {};
-			vm.getBadges();
-			vm.getContacts();
-		}
 
 		// This was copied from Alex's interview demo, but I did not have time to reimplement the infinite scroll code.
 		$scope.$on('loadMoreBadges', function() {
@@ -70,7 +70,7 @@ const app = new Vue({
 		vm.showBadges = _showBadges.bind(vm, API);
 		$scope.login = _login.bind(vm, API);
 
-		_init();
+		_init(vm);
 	}
 
 
@@ -216,7 +216,7 @@ const app = new Vue({
 		API.get('/authenticate', 'POST', {username:vm.username, password:vm.password}).then(function(res) {
 			if (res.data && res.data.isLoggedIn) {
 				// Reset the app, including the logged in state.
-				_init();
+				_init(vm);
 			}
 			else {
 				vm.isLoggedIn = false;
