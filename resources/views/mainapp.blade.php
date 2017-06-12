@@ -7,94 +7,10 @@
 
 		<title>Eli's Credly App</title>
 
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<!--		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+-->
 		<link rel="stylesheet" type="text/css" href="/css/app.css">
-
-		<!-- TODO: CSS file -->
-		<style>
-			.columns {
-				display: -ms-flex;
-				display: -webkit-flex;
-				display: flex;
-			}
-			.ui_column {
-				width: 50%;
-				box-sizing: border-box;
-				padding: 10px;
-			}
-			.ui_column.badges_column {
-				float: left;
-				border-right: 1px solid #ccc;
-			}
-			.ui_column.contacts_column {
-				float: right;
-			}
-			.badge_image {
-				float: left;
-			}
-			.badge_title {
-				text-align: center;
-				font-weight: bold;
-				font-size: 16px;
-			}
-			.member_box {
-				position: relative;
-				float: left;
-				display: block;
-				height: 170px;
-				width: 170px;
-				border: 2px solid black;
-				border-radius: 4px;
-				background-color: #AAA;
-				margin: 12px;
-				overflow: hidden;
-			}
-			.member_box .avatar {
-				display: block;
-				height: 170px;
-				width: 170px;
-			}
-			.member_box .avatar.non_member {
-				/* TODO: Default avatar */
-			}
-			.member_overlay {
-				position: absolute;
-				height: 28px;
-				width: 100%;
-				background-color: rgba(0, 0, 0, .75);
-				overflow: hidden;
-				color: #FFF;
-				font-weight: bold;
-				padding: 0 4px;
-				line-height: 24px;
-				text-align: center;
-			}
-			.member_box .display_name {
-				top: 0;
-			}
-
-			.main-wrapper:not(.loggedIn),
-			.login-form.loggedIn {
-				display: none;
-			}
-
-			.show_badges {
-				cursor: pointer;
-			}
-			.member_badges {
-				bottom: 0;
-			}
-			.member_badges .badges {
-				width: 100%;
-				height: 100%;
-			}
-			.member_badges .badges .cbadge {
-				height: 100%;
-				float: left;
-				padding: 3px;
-			}
-		</style>
 	</head>
 	<body ng-controller="UIController as uiController">
 		{{-- verbatim to allow Angular interpolation --}}

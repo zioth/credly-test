@@ -11,6 +11,5 @@ let mix = require('laravel-mix');
  |
  */
 
-mix.combine(['resources/assets/js/app.js', 'resources/assets/js/angular-dragdrop-min.js'], 'combined.js')
-mix.js('combined.js', 'public/js')
+mix.js('resources/assets/js/app.js', 'public/js')
    .sass('resources/assets/sass/app.scss', 'public/css');
