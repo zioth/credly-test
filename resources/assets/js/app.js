@@ -114,10 +114,6 @@ const app = new Vue({
 	function _getBadges($scope, API) {
 		var vm = this;
 
-		if ($scope.noMore) {
-			return;
-		}
-
 		//TODO: Need seperate loading states for each action. Shared just results in a flickering UI
 		vm.isLoading = true;
 
@@ -131,9 +127,6 @@ const app = new Vue({
 				vm.isLoggedIn = !res.data || !res.data.meta || res.data.meta.status_code != 401;
 				if (res.data.data) {
 					vm.badges = vm.badges.concat(res.data.data);
-				}
-				if (res.data && res.data.paging) {
-					$scope.noMore = vm.badges.length >= res.data.paging.total_results;
 				}
 			},
 			function(err) {
@@ -164,9 +157,6 @@ const app = new Vue({
 				vm.isLoggedIn = !res.data || !res.data.meta || res.data.meta.status_code != 401;
 				if (res.data.data) {
 					vm.contacts = vm.contacts.concat(res.data.data);
-				}
-				if (res.data && res.data.paging) {
-					$scope.noMore = vm.contacts.length >= res.data.paging.total_results;
 				}
 			},
 			function(err) {
