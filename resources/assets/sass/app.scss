@@ -8,6 +8,10 @@
 // Bootstrap
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
 
+.error {
+	color: #F00;
+}
+
 .app_title {
 	font-size: 24px;
 	text-align: center;

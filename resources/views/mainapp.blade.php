@@ -17,7 +17,7 @@
 		@verbatim
 			<div class="app_title">Eli's Credly App</div>
 			<div class="login_form" ng-class="{'loggedIn': uiController.isLoggedIn}">
-				<!-- TODO: If made one attempt and failed, err -->
+				<div ng-show="uiController.loginFailed" class="error">Your username or password was invalid. Please try again.</div>
 				<form name="form" ng-submit="login()" role="form">
 					<div class="form-group">
 						<label for="username">Username</label>
