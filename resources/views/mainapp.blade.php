@@ -7,13 +7,10 @@
 
 		<title>Eli's Credly App</title>
 
-<!--		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
--->
 		<link rel="stylesheet" type="text/css" href="/css/app.css">
 	</head>
 	<body ng-controller="UIController as uiController">
-		{{-- verbatim to allow Angular interpolation --}}
+		{{-- @verbatim to allow Angular interpolation --}}
 		@verbatim
 			<div class="app_title">Eli's Credly App</div>
 			<div class="login_form" ng-class="{'loggedIn': uiController.isLoggedIn}">

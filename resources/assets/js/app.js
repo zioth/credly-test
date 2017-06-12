@@ -164,11 +164,14 @@ const app = new Vue({
 				API.get('/authenticate', 'POST', {username:vm.username, password:vm.password}).then(function(res) {
 					if (res.data && res.data.isLoggedIn) {
 						_init();
-						vm.isLoggedIn = true;
 					}
 					else {
 						vm.isLoggedIn = false;
 						vm.loginFailed = true;
+					}
+
+					if ($scope.$root.$$phase != '$apply' && $scope.$root.$$phase != '$digest') {
+						$scope.$apply();
 					}
 				}, function(err) {
 					vm.isLoggedIn = false;
