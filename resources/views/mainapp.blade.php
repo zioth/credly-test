@@ -82,8 +82,7 @@
 				height: 100%;
 			}
 			.member_badges .badges .cbadge {
-				height: 18px;
-				width: 18px;
+				height: 100%;
 				float: left;
 				padding: 3px;
 			}
@@ -169,6 +168,7 @@
 									<img
 										class="cbadge"
 										ng-src="{{ badge }}"
+										title="{{ badge.title }} : {{ badge.short_description }}"
 										ng-repeat="badge in uiController.memberBadges[contact.contact_member_id]"
 									/>
 								</div>
