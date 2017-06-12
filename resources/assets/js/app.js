@@ -61,7 +61,6 @@ const app = new Vue({
 		}
 
 		// This was copied from Alex's interview demo, but I did not have time to reimplement the infinite scroll code.
-		var page = 1;
 		$scope.$on('loadMoreBadges', function() {
 			vm.getBadges();
 		});
@@ -124,7 +123,7 @@ const app = new Vue({
 
 		API.get('/me/badges/created', 'GET', {
 			order_direction: 'ASC',
-			page: page,
+			page: 1,
 			per_page: 20
 		}).then(
 			function(res) {
@@ -157,7 +156,7 @@ const app = new Vue({
 
 		API.get('/me/contacts', 'GET', {
 			order_direction: 'ASC',
-			page: page,
+			page: 1,
 			per_page: 20
 		}).then(
 			function(res) {
