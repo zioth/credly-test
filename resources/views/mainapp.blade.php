@@ -82,19 +82,19 @@
 			}
 		</style>
 	</head>
-	<body ng-controller="BadgesController as badgesController">
+	<body ng-controller="UIController as uiController">
 		{{-- verbatim to allow Angular interpolation --}}
 		@verbatim
-			<div class="login-form" ng-class="{'loggedIn': badgesController.isLoggedIn}">
+			<div class="login-form" ng-class="{'loggedIn': uiController.isLoggedIn}">
 				<!-- TODO: If made one attempt and failed, err -->
 				<form name="form" ng-submit="login()" role="form">
 					<div class="form-group">
 						<label for="username">Username</label>
-						<input type="text" name="username" id="username" class="form-control" ng-model="badgesController.username" required />
+						<input type="text" name="username" id="username" class="form-control" ng-model="uiController.username" required />
 					</div>
 					<div class="form-group">
 						<label for="password">Password</label>
-						<input type="password" name="password" id="password" class="form-control" ng-model="badgesController.password" required />
+						<input type="password" name="password" id="password" class="form-control" ng-model="uiController.password" required />
 					</div>
 					<div class="form-actions">
 						<button type="submit" class="btn btn-primary">Login</button>
@@ -104,25 +104,25 @@
 					</div>
 				</form>
 			</div>
-			<div class="main-wrapper container" ng-class="{'loggedIn': badgesController.isLoggedIn}">
+			<div class="main-wrapper container" ng-class="{'loggedIn': uiController.isLoggedIn}">
 				<div class="columns">
 					<div
 						class="badges_column ui_column"
 						event-name="loadMoreBadges"
-						ng-class="{'loading': badgesController.isLoading}"
+						ng-class="{'loading': uiController.isLoading}"
 						>
 						<a
 							class="badge-image"
 							href="https://credly.com/recipients/{{ badge.id }}"
 							target="_blank"
-							ng-repeat="badge in badgesController.badges">
+							ng-repeat="badge in uiController.badges">
 							<div class="clearfix" ng-if="$index % 3 == 0"></div>
 							<div class="col-xs-4">
 								<div>{{ badge.title }}</div>
 								<img ng-src="{{ badge.image_url | imageFilter: 13 }}" />
 							</div>
 						</a>
-						<div class="loader loader--style2" title="1" ng-show="badgesController.isLoading">
+						<div class="loader loader--style2" title="1" ng-show="uiController.isLoading">
 						  <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 							 width="40px" height="40px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
 						  <path fill="#000" d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z">
@@ -140,13 +140,11 @@
 					<div
 						class="contacts_column ui_column"
 						event-name="loadMoreContacts"
-						ng-class="{'loading': badgesController.isLoading}"
-						>
-						<!-- TODO: This always displays at least one, even if there are no contacts. -->
+						ng-class="{'loading': uiController.isLoading}">
 						<div
 							class="member_box"
 							ng-class="{'is_member': contact.is_member}"
-							ng-repeat="contact in badgesController.contacts"
+							ng-repeat="contact in uiController.contacts"
 							data-memberid="{{ contact.contact_member_id }}"
 							data-id="{{ contact.id }}"
 						>
@@ -162,9 +160,6 @@
 							</div>
 
 							<div ng-switch on="contact.loadedBadges" class="member_badges member_overlay">
-								<div ng-switch-when="false" class="show_badges" ng-click="badgesController.showBadges(contact.id)">
-									Show Badges
-								</div>
 								<div ng-switch-default class="badges">
 									<img
 										class="badge"
@@ -173,6 +168,9 @@
 										data-memberid="{{ contact.contact_member_id }}"
 										data-id="{{ contact.id }}"
 									/>
+								</div>
+								<div ng-switch-when="true" class="show_badges" ng-click="uiController.showBadges(contact.id)">
+									Show Badges
 								</div>
 							</div>
 						</div>
