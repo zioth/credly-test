@@ -82,8 +82,14 @@
 	display: none;
 }
 .login_form {
-	padding: 24px;
-	max-width: 400px;
+	width: 400px;
+	margin-left: -200px;
+	padding-left: 50%;
+	box-sizing: initial;
+}
+.login_form .form-actions .submit {
+	width: 100%;
+	margin-top: 24px;
 }
 
 .show_badges {
