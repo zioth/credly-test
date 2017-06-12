@@ -31,40 +31,50 @@ const app = new Vue({
 				return ret.substring(0, endIndex) + '_' + size + ret.substring(endIndex);
 			}
 		})
-		// Log in
-		.factory('LogIn',  ['$http', function($http) {
-			var vm = this;
+
+		/**
+		 * Send an API request to the Credly proxy.
+		 *
+		 * @param {String} action - The API action. For example, /contacts
+		 * @param {String} method - 'GET' or 'POST'
+		 * @param {Object=|null} - URL parameters as name:value pairs
+		 */
+		.factory('ApiRequest',  ['$http', function($http) {
 			return {
-				get: _apiRequest.bind(null, '/authenticate', 'POST')
+				get: function _apiRequest(action, method, data) {
+					var params = {
+						method: method,
+						url: action,
+						params: data || {},
+						cache: method != 'POST'
+					};
+					if (method == 'POST') {
+						params.headers = {'Content-Type': 'application/x-www-form-urlencoded'}
+					}
+					return $http(params);
+				}
 			}
-		}])
-		// Get the badges created by the logged-in user
-		.factory('Badges', ['$http', function($http) {
-			return {
-				get: _apiRequest.bind(null, '/badges', 'GET')
-			}
-		}])
-		// Get the logged-in user's contacts
-		.factory('Contacts', ['$http', function($http) {
-			return {
-				get: _apiRequest.bind(null, '/contacts', 'GET')
-			}
-		}])
+		}
+
 		// Main controller
-		.controller('UIController', ['$scope', 'Badges', 'Contacts', 'LogIn', function($scope, Badges, Contacts, LogIn) {
+		.controller('UIController', ['$scope', 'ApiRequest', function($scope, API) {
 			var vm = this;
 			var page = 1;
 
+			// This was copied from Alex's demo. I have not implemented it for this project, so it's here as a placeholder.
 			$scope.$on('loadMoreBadges', function() {
 				vm.getBadges();
 			});
 
+			/**
+			 * Get the badges created by the logged-in user
+			 */
 			vm.getBadges = function() {
 				if ($scope.noMore) return;
 
 				vm.isLoading = true;
 
-				Badges.get({
+				API.get('/badges', 'GET', {
 					order_direction: 'DESC',
 					page: 1,
 					per_page: 20
@@ -85,9 +95,10 @@ const app = new Vue({
 				);
 			};
 
+			// Get the logged-in user's contacts
 			vm.getContacts = function() {
 				// TODO: loading state
-				Contacts.get({
+				API.get('/contacts', 'GET', {
 					order_direction: 'DESC',
 					page: 1,
 					per_page: 20
@@ -112,8 +123,9 @@ const app = new Vue({
 				console.error(memberid);
 			};
 
+			// Authenticate
 			$scope.login = function() {
-				LogIn.get(vm.username, vm.password).then(function(res) {
+				API.get('/authenticate', 'POST' {username:vm.username, password:vm.password}).then(function(res) {
 					if (res.data && res.data.isLoggedIn) {
 						_init();
 					}
@@ -147,25 +159,6 @@ const app = new Vue({
 
 			//TODO DEBUG:
 			window._DEBUGTEST = vm;
-		}]);
-
-	/**
-	 * Send an API request to the Credly proxy.
-	 *
-	 * @param {String} action - The API action. For example, /contacts
-	 * @param {String} method - 'GET' or 'POST'
-	 * @param {Object=|null} - URL parameters as name:value pairs
-	 */
-	function _apiRequest(action, method, data) {
-		var params = {
-			method: method,
-			url: action,
-			params: data || {},
-			cache: method != 'POST'
-		};
-		if (method == 'POST') {
-			params.headers = {'Content-Type': 'application/x-www-form-urlencoded'}
-		}
-		return $http(params);
-	}
+		}]
+	);
 })();
