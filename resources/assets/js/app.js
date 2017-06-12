@@ -30,8 +30,12 @@ const app = new Vue({
 		.factory('ApiRequest',  ['$http', _apiRequestFactory])
 
 		// Main controller
-		.controller('UIController', ['$scope', 'ApiRequest', _uiController]
-	);
+		.controller('UIController', ['$scope', 'ApiRequest', _uiController])
+		.controller('OverviewCtrl', function($scope) {
+			$scope.list1 = {title: 'AngularJS - Drag Me'};
+			$scope.list2 = {};
+		});
+	;
 
 
 	/**

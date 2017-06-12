@@ -100,11 +100,16 @@
 				</path>
 			  </svg>
 			</div>
+<div class="btn btn-primary" data-drag="true" data-jqyoui-options="{revert: 'invalid'}" ng-model="list1" jqyoui-draggable="{animate:true}" ng-hide="!list1.title">{{list1.title}}</div>
+<div class="thumbnail" data-drop="true" data-jqyoui-options ng-model="list2" jqyoui-droppable style='height:50px;'>
+  <div class="btn btn-success" data-drag="false" data-jqyoui-options ng-model="list2" jqyoui-draggable ng-hide="!list2.title">{{list2.title}}</div>
+</div>
 		@endverbatim
 
 		{{-- TODO: Integrate angular into Laraview project instead of taking this shortcut --}}
 		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
 		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-animate.min.js"></script>
 		<script type="text/javascript" src="/js/app.js"></script>
+		<script type="text/javascript" src="/js/angular-dragdrop.js"></script>
 	</body>
 </html>
