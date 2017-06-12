@@ -93,14 +93,7 @@ const app = new Vue({
 			 * @param {Object=|null} - URL parameters as name:value pairs
 			 */
 			send: function(action, method, data) {
-				var params = {
-					//method: method,
-					url: action,
-					params: data || {}
-				};
-				if (method == 'POST') {
-					params.headers = {'Content-Type': 'application/x-www-form-urlencoded'}
-				}
+				// Use .get and .post aliases, because $http() always puts params in the URL (bad for /authenticate)
 				return method=='GET' ? $http.get(action, data||{}) : $http.post(action, data||{});
 			}
 		}
