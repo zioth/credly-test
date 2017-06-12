@@ -71,6 +71,8 @@ const app = new Vue({
 		$scope.login = _login.bind(vm, API);
 
 		$scope.onDrop = function(badge, contact) {
+			// TODO: add badge, then fetch if !exist.
+			// member_id, badge_id
 			vm.memberBadges[contact.member_id].push({
 				src: badge.image_url,
 				title: badge.title,
@@ -183,6 +185,7 @@ const app = new Vue({
 	 * Get a sample set of badges for a member. No need to get all of them.
 	 *
 	 * @param {ApiRequest) API - The Credly API request object.
+	 * @param {int) memberid - Show this member's badges
 	 *
 	 * Scope: uiController
 	 */
@@ -191,7 +194,7 @@ const app = new Vue({
 		//TODO: Add a loading state
 
 		API.get('/members/' + memberid + '/badges', 'GET', {
-			order_direction: 'ASC',
+			order_direction: 'DESC', // Most recent badge first
 			page: 1,
 			per_page: 10
 		}).then(
@@ -216,6 +219,46 @@ const app = new Vue({
 		);
 	}
 
+
+	/**
+	 * Get a sample set of badges for a member. No need to get all of them.
+	 *
+	 * @param {ApiRequest) API - The Credly API request object.
+	 *
+	 * Scope: uiController
+	 */
+	function _giveBadge(API, memberid, badgeid) {
+		var vm = this;
+		//TODO: Add a loading state
+
+		API.get('/member_badges', 'POST', {
+			member_id: member_id,
+			badge_id: badge_id
+		}).then(
+			function(res) {
+				vm.isLoggedIn = !res.data || !res.data.meta || res.data.meta.status_code != 401;
+				if (vm.isLoggedIn) {
+					var obj = vm.memberBadges[memberid];
+					if (res.data.data && res.data.data.length) {
+						if (obj) {
+							//TODO: Error handling
+							var badge = res.data.data[0].badge;
+							obj.push({
+								src: badge.image_url,
+								title: badge.title,
+								short_description: badge.short_description
+							});
+						}
+						else {
+							_showBadges.bind(vm)(API, memberid);
+						}
+					}
+				}
+			},
+			function(err) {
+			}
+		);
+	}
 
 	/**
 	 * Authenticate the user
