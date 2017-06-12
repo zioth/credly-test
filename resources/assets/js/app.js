@@ -117,7 +117,6 @@ const app = new Vue({
 			return;
 		}
 
-		//TODO: Need seperate loading states for each action. Shared just results in a flickering UI
 		vm.loadingCount++;
 
 		API.get('/me/badges/created', 'GET', {
@@ -190,15 +189,17 @@ const app = new Vue({
 		}).then(
 			function(res) {
 				vm.isLoggedIn = !res.data || !res.data.meta || res.data.meta.status_code != 401;
-				if (res.data.data && res.data.data.length) {
-					var obj = vm.memberBadges[res.data.data[0].member_id] = [];
-					for (var x=0; x<res.data.data.length; x++) {
-						var badge = res.data.data[x].badge;
-						obj.push({
-							src: badge.image_url,
-							title: badge.title,
-							short_description: badge.short_description
-						});
+				if (vm.isLoggedIn) {
+					var obj = vm.memberBadges[memberid] = [];
+					if (res.data.data && res.data.data.length) {
+						for (var x=0; x<res.data.data.length; x++) {
+							var badge = res.data.data[x].badge;
+							obj.push({
+								src: badge.image_url,
+								title: badge.title,
+								short_description: badge.short_description
+							});
+						}
 					}
 				}
 			},

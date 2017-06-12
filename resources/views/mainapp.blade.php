@@ -103,7 +103,7 @@
 			</div>
 		@endverbatim
 
-		<!-- TODO: Integrate angular into Laraview project instead of taking this shortcut -->
+		{-- TODO: Integrate angular into Laraview project instead of taking this shortcut --}
 		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
 		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-animate.min.js"></script>
 		<script type="text/javascript" src="/js/app.js"></script>
