@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="{{ app()->getLocale() }}" ng-app="CredlyDisplayer">
+<html lang="{{ app()->getLocale() }}" ng-app="CredlyApp">
 	<head>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -43,8 +43,17 @@
 							class="badge_box"
 							href="https://credly.com/recipients/{{ badge.id }}"
 							target="_blank"
-							ng-repeat="badge in uiController.badges">
-								<img ng-src="{{ badge.image_url | imageFilter: 13 }}" ng-attr-title="{{ badge.title }}"/>
+							ng-repeat="badge in uiController.badges by $index">
+								<img ng-src="{{ badge.image_url | imageFilter: 13 }}" ng-attr-title="{{ badge.title }}"
+									ui-draggable="true" drag="badge"
+									drag-channel="badge"
+									drop-validate="dropValidateHandler($drop, $event, $data)"
+									drag-hover-class="on-drag-hover-custom"
+									drag-image-element-id="getCustomDragElementId($index)"
+									on-drop-success="dropSuccessHandler($event,$index,men)"
+									ui-on-drop="onDrop($event,$data,men,$index)"
+									drop-channel="badge"
+								/>
 						</a>
 					</div>
 					<div

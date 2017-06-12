@@ -23,7 +23,7 @@ const app = new Vue({
 (function() {
 	'use strict';
 
-	angular.module('CredlyDisplayer', ['ngAnimate'])
+	angular.module('CredlyApp', ['ngAnimate'])
 		.filter('imageFilter', _imageFilter)
 
 		// Send an API request to the Credly proxy.
@@ -31,55 +31,6 @@ const app = new Vue({
 
 		// Main controller
 		.controller('UIController', ['$scope', 'ApiRequest', _uiController])
-		.controller('MainCtrl', function($scope) {
-			$scope.men = [
-				'John',
-				'Jack',
-				'Mark',
-				'Ernie',
-				'Mike (Locked)'
-			];
-
-
-			$scope.women = [
-				'Jane',
-				'Jill',
-				'Betty',
-				'Mary'
-			];
-
-			$scope.dropValidateHandler = function($drop, $event, $data) {
-				if ($data === 'Mike (Locked)') {
-					return false;
-				}
-				if ($drop.element[0] === $event.srcElement.parentNode) {
-					// Don't allow moving to same container
-					return false;
-				}
-				return true;
-			};
-
-			$scope.dropSuccessHandler = function($event, index, array) {
-				array.splice(index, 1);
-			};
-
-			$scope.dropFailureHandler = function($event, index, array) {
-				alert(array[index] + ' could be dropped into left list!')
-			};
-
-			$scope.onDrop = function($event, $data, array, index) {
-				if (index !== undefined) {
-					array.splice(index, 0, $data);
-				} else {
-					array.push($data);
-				}
-			};
-
-			$scope.getCustomDragElementId = function (index) {
-				return 'customDrag' + (index % 2);
-			}
-
-		})
 	;
 
 
@@ -119,8 +70,33 @@ const app = new Vue({
 		vm.showBadges = _showBadges.bind(vm, API);
 		$scope.login = _login.bind(vm, API);
 
-$scope.list1 = {title: 'AngularJS - Drag Me'};
-$scope.list2 = {};
+$scope.dropValidateHandler = function($drop, $event, $data) {
+	if ($drop.element[0] === $event.srcElement.parentNode) {
+		// Don't allow moving to same container
+		return false;
+	}
+	return true;
+};
+
+$scope.dropSuccessHandler = function($event, index, array) {
+	array.splice(index, 1);
+};
+
+$scope.dropFailureHandler = function($event, index, array) {
+	alert(array[index] + ' could be dropped into left list!')
+};
+
+$scope.onDrop = function($event, $data, array, index) {
+	if (index !== undefined) {
+		array.splice(index, 0, $data);
+	} else {
+		array.push($data);
+	}
+};
+
+$scope.getCustomDragElementId = function (index) {
+	return 'customDrag' + (index % 2);
+}
 
 		_init(vm);
 	}
