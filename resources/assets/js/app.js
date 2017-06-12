@@ -101,7 +101,7 @@ const app = new Vue({
 				if (method == 'POST') {
 					params.headers = {'Content-Type': 'application/x-www-form-urlencoded'}
 				}
-				return method=='GET' ? $http.get(action, params) : $http.post(action, params);
+				return method=='GET' ? $http.get(action, data||{}) : $http.post(action, data||{});
 			}
 		}
 	}
