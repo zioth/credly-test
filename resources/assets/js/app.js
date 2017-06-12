@@ -250,7 +250,7 @@ const app = new Vue({
 						}
 						else {
 							_showBadges.bind(vm)(API, memberid)
-								.then(function(res) {
+								.then(function() {
 									_addIt(vm.memberBadges[memberid], res.data.data[0].badge);
 								});
 						}
