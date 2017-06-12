@@ -128,7 +128,7 @@ const app = new Vue({
 			};
 
 			/**
-			 * Get all badges for a member
+			 * Get a sample set of badges for a member. No need to get all of them.
 			 */
 			vm.showBadges = function(memberid) {
 				//TODO: Add a loading state
@@ -141,12 +141,10 @@ const app = new Vue({
 					function(res) {
 						vm.isLoggedIn = !res.data || !res.data.meta || res.data.meta.status_code != 401;
 						if (res.data.data) {
+							var obj = vm.memberBadges[res.data.data[x].member_id] = [];
 							for (var x=0; x<res.data.data.length; x++) {
-								vm.memberBadges[res.data.data[x].member_id] = res.data.data[x].badge.image_url;
+								obj.push(res.data.data[x].badge.image_url);
 							}
-						}
-						if (res.data && res.data.paging) {
-							$scope.noMore = vm.contacts.length >= res.data.paging.total_results;
 						}
 					},
 					function(err) {
