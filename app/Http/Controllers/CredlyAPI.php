@@ -93,7 +93,7 @@ class CredlyAPI extends Controller {
 
 			if (json_last_error() === JSON_ERROR_NONE) {
 				if ($jsonResults->data && $jsonResults->data->token) {
-					Cookie::queue(Cookie::make('credly_token', $jsonResults->data->token, 525600));
+					Cookie::queue(Cookie::make('credly_token', $jsonResults->data->token, 525600, '/'));
 					return '{"isLoggedIn": true}';
 				}
 			}

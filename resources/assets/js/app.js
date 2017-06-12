@@ -163,6 +163,7 @@ const app = new Vue({
 				//TODO BUG: Why do username&password get appended to the URL? Angular docs say that $http() doesn't work like that.
 				API.get('/authenticate', 'POST', {username:vm.username, password:vm.password}).then(function(res) {
 					if (res.data && res.data.isLoggedIn) {
+						// Reset the app, including the logged in state.
 						_init();
 					}
 					else {
