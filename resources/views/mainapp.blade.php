@@ -40,12 +40,11 @@
 						>
 						<div class="app_subtitle">My Created Badges</div>
 						<a
-							class="badge_image"
+							class="badge_box"
 							href="https://credly.com/recipients/{{ badge.id }}"
 							target="_blank"
 							ng-repeat="badge in uiController.badges">
-								<div class="badge_title">{{ badge.title }}</div>
-								<img ng-src="{{ badge.image_url | imageFilter: 13 }}" />
+								<img ng-src="{{ badge.image_url | imageFilter: 13 }}" ng-attr-title="{{ badge.title }}"/>
 						</a>
 					</div>
 					<div

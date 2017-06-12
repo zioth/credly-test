@@ -1,4 +1,3 @@
-
 // Fonts
 @import url("https://fonts.googleapis.com/css?family=Raleway:300,400,600");
 
@@ -8,19 +7,30 @@
 // Bootstrap
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
 
+/* Common page elements */
 .error {
 	color: #F00;
 	padding: 12px 0;
 }
+.loader {
+	position: fixed;
+	top: 200px;
+	left: 50%;
+	margin-left: -50px;
+	box-shadow: 1px 1px 1px 5000px rgba(0,0,0,.75) inset, 1px 1px 1px 5000px rgba(0,0,0,.75);
+}
 
+
+/* Top of the page */
 .app_title {
 	width: 100%;
 	font-size: 24px;
 	text-align: center;
 	font-weight: bold;
+	background-color: rgba(122,124,125, .05);
 	padding: 6px 0 12px;
 	margin-bottom: 12px;
-	background-color: rgba(122,124,125, .05);
+	border-bottom: 1px solid #ddd;
 }
 .app_subtitle {
 	width: 100%;
@@ -30,6 +40,8 @@
 	padding: 12px 0;
 }
 
+
+/* Page structure */
 .main_wrapper {
 	margin: 0 auto;
 }
@@ -47,7 +59,6 @@
 	width: 100%;
 	margin-top: 24px;
 }
-
 .columns {
 	display: -ms-flex;
 	display: -webkit-flex;
@@ -67,13 +78,12 @@
 .ui_column.contacts_column {
 	float: right;
 }
-.badge_image {
+
+
+/* Badges and members */
+.badge_box {
 	display: inline-block;
-}
-.badge_title {
-	text-align: center;
-	font-weight: bold;
-	font-size: 16px;
+	margin: 12px;
 }
 .member_box {
 	position: relative;
@@ -110,6 +120,8 @@
 	top: 0;
 }
 
+
+/* Small badges on members */
 .show_badges {
 	cursor: pointer;
 }
@@ -124,12 +136,4 @@
 	height: 100%;
 	float: left;
 	padding: 3px;
-}
-
-.loader {
-	position: fixed;
-	top: 200px;
-	left: 50%;
-	margin-left: -50px;
-	box-shadow: 1px 1px 1px 5000px rgba(0,0,0,.75) inset, 1px 1px 1px 5000px rgba(0,0,0,.75);
 }
