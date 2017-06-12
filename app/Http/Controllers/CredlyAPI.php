@@ -22,23 +22,7 @@ class CredlyAPI extends Controller {
 		// TODO: Optimize: If there's no cookie, many requests will fail.
 		$args['access_token'] = Cookie::get('credly_token');
 
-		$method = 'GET';
-
-		$curl = curl_init();
-
-		curl_setopt_array($curl, [
-			CURLOPT_URL => "https://api.credly.com/v1.1/$action?" . http_build_query($args),
-			CURLOPT_RETURNTRANSFER => true,
-			CURLOPT_ENCODING => '',
-			CURLOPT_MAXREDIRS => 10,
-			CURLOPT_TIMEOUT => 30,
-			CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-			CURLOPT_CUSTOMREQUEST => $method,
-			CURLOPT_HTTPHEADER => [
-				'x-api-key: ' . env('CREDLY_API_KEY'),
-				'x-api-secret: ' . env('CREDLY_API_SECRET')
-			]
-		]);
+		$curl = setupCurl("https://api.credly.com/v1.1/$action?" . http_build_query($args), 'GET');
 
 		$curl_response = curl_exec($curl);
 		$err = curl_error($curl);
@@ -67,22 +51,7 @@ class CredlyAPI extends Controller {
 	 * TODO: Create new middleware to do integrated Laravel authentication.
 	 */
 	public function authenticate() {
-		$curl = curl_init();
-
-		curl_setopt_array($curl, [
-			CURLOPT_URL => "https://api.credly.com/v1.1/authenticate",
-			CURLOPT_RETURNTRANSFER => true,
-			CURLOPT_ENCODING => '',
-			CURLOPT_MAXREDIRS => 10,
-			CURLOPT_TIMEOUT => 30,
-			CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-			CURLOPT_CUSTOMREQUEST => 'POST',
-			CURLOPT_HTTPHEADER => [
-				'x-api-key: ' . env('CREDLY_API_KEY'),
-				'x-api-secret: ' . env('CREDLY_API_SECRET')
-			]
-		]);
-
+		$curl = setupCurl('https://api.credly.com/v1.1/authenticate', 'POST');
 		curl_setopt($curl, CURLOPT_USERPWD, Input::get('username', '') . ":" . Input::get('password', ''));
 		$curl_response = curl_exec($curl);
 		$err = curl_error($curl);
@@ -100,5 +69,32 @@ class CredlyAPI extends Controller {
 		}
 
 		return '{"isLoggedIn": false}';
+	}
+
+
+	/**
+	 * Initialize the curl object.
+	 *
+	 * @param {String} $url - The URL
+	 * @param {String} $method - The HTTP method
+	 */
+	private function setupCurl($url, $method) {
+		$curl = curl_init();
+
+		curl_setopt_array($curl, [
+			CURLOPT_URL => "https://api.credly.com/v1.1/authenticate",
+			CURLOPT_RETURNTRANSFER => true,
+			CURLOPT_ENCODING => '',
+			CURLOPT_MAXREDIRS => 10,
+			CURLOPT_TIMEOUT => 30,
+			CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+			CURLOPT_CUSTOMREQUEST => 'POST',
+			CURLOPT_HTTPHEADER => [
+				'x-api-key: ' . env('CREDLY_API_KEY'),
+				'x-api-secret: ' . env('CREDLY_API_SECRET')
+			]
+		]);
+
+		return $curl;
 	}
 }
