@@ -22,7 +22,7 @@ class CredlyAPI extends Controller {
 		// TODO: Optimize: If there's no cookie, many requests will fail.
 		$args['access_token'] = Cookie::get('credly_token');
 
-		$curl = setupCurl("https://api.credly.com/v1.1/$action?" . http_build_query($args), 'GET');
+		$curl = $this->setupCurl("https://api.credly.com/v1.1/$action?" . http_build_query($args), 'GET');
 
 		$curl_response = curl_exec($curl);
 		$err = curl_error($curl);
@@ -51,7 +51,7 @@ class CredlyAPI extends Controller {
 	 * TODO: Create new middleware to do integrated Laravel authentication.
 	 */
 	public function authenticate() {
-		$curl = setupCurl('https://api.credly.com/v1.1/authenticate', 'POST');
+		$curl = $this->setupCurl('https://api.credly.com/v1.1/authenticate', 'POST');
 		curl_setopt($curl, CURLOPT_USERPWD, Input::get('username', '') . ":" . Input::get('password', ''));
 		$curl_response = curl_exec($curl);
 		$err = curl_error($curl);
