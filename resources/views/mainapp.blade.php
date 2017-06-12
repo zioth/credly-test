@@ -160,7 +160,7 @@
 							</div>
 
 							<div ng-switch on="contact.loadedBadges" class="member_badges member_overlay">
-								<div ng-switch-default class="badges">
+								<div ng-switch-when="true" class="badges">
 									<img
 										class="badge"
 										ng-src="{{ badge.image }}"
@@ -169,7 +169,7 @@
 										data-id="{{ contact.id }}"
 									/>
 								</div>
-								<div ng-switch-when="true" class="show_badges" ng-click="uiController.showBadges(contact.id)">
+								<div ng-switch-default class="show_badges" ng-click="uiController.showBadges(contact.id)">
 									Show Badges
 								</div>
 							</div>
