@@ -20,14 +20,14 @@ class CredlyAPI extends Controller {
 		$args = Request::all();
 		// From authentication. If the cookie is missing or the token is expired, the client will handle the error and present a login page.
 		// TODO: Optimize: If there's no cookie, many requests will fail.
-		array_push($args, 'access_token=' . Cookie::get('credly_token'));
+		$args['access_token'] = Cookie::get('credly_token');
 
 		$method = 'GET';
 
 		$curl = curl_init();
 
 		curl_setopt_array($curl, [
-			CURLOPT_URL => "https://api.credly.com/v1.1/$action?" . join('&', $args),
+			CURLOPT_URL => "https://api.credly.com/v1.1/$action?" . http_build_query($args),
 			CURLOPT_RETURNTRANSFER => true,
 			CURLOPT_ENCODING => '',
 			CURLOPT_MAXREDIRS => 10,
@@ -54,7 +54,7 @@ class CredlyAPI extends Controller {
 			}
 		}
 
-		return $action!='me/contacts' ? "https://api.credly.com/v1.1/$action?" . join('&', $args) . '---' . $args[1] : response()->json($results);
+		return $action!='me/contacts' ? "https://api.credly.com/v1.1/$action?" . http_build_query($args) . '---' . $args[1] : response()->json($results);
 	}
 
 
