@@ -160,12 +160,12 @@
 								</div>
 							</div>
 
-							<div ng-switch on="!!uiController.memberBadges[contact.id]" class="member_badges member_overlay">
+							<div ng-switch on="!!uiController.memberBadges[contact.contact_member_id]" class="member_badges member_overlay">
 								<div ng-switch-when="true" class="badges">
 									<img
 										class="badge"
 										ng-src="{{ badge.image }}"
-										ng-repeat="badge in uiController.memberBadges[contact.contact_member_id]"
+										ng-repeat="badge in uiController.memberBadges[contact.id]"
 									/>
 								</div>
 								<div ng-switch-default class="show_badges" ng-click="uiController.showBadges(contact.id)">
