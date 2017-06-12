@@ -43,15 +43,15 @@
 							class="badge_box"
 							href="https://credly.com/recipients/{{ badge.id }}"
 							target="_blank"
-							ng-repeat="badge in uiController.badges by $index">
+							ng-repeat="badge in uiController.badges">
 								<img ng-src="{{ badge.image_url | imageFilter: 13 }}" ng-attr-title="{{ badge.title }}"
 									ui-draggable="true" drag="badge"
 									drag-channel="badge"
 									drop-validate="dropValidateHandler($drop, $event, $data)"
 									drag-hover-class="on-drag-hover-custom"
-									drag-image-element-id="getCustomDragElementId($index)"
-									on-drop-success="dropSuccessHandler($event,$index,men)"
-									ui-on-drop="onDrop($event,$data,men,$index)"
+									drag-image-element-id="getCustomDragElementId(badge)"
+									on-drop-success="dropSuccessHandler($event, $badge)"
+									ui-on-drop="onDrop($event,$data,badge)"
 									drop-channel="badge"
 								/>
 						</a>
