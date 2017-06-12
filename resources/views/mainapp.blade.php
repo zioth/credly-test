@@ -10,7 +10,7 @@
 		<link rel="stylesheet" type="text/css" href="/css/app.css">
 	</head>
 	<body ng-controller="UIController as uiController">
-		{{-- @verbatim to allow Angular interpolation --}}
+		{{-- verbatim to allow Angular interpolation --}}
 		@verbatim
 			<div class="app_title">Eli's Credly App</div>
 			<div class="login_form" ng-class="{'loggedIn': uiController.isLoggedIn}">
