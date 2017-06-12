@@ -100,10 +100,43 @@
 				</path>
 			  </svg>
 			</div>
-<div class="btn btn-primary" data-drag="true" data-jqyoui-options="{revert: 'invalid'}" ng-model="list1" jqyoui-draggable="{animate:true}">{{list1.title}}</div>
-<div class="thumbnail" data-drop="true" data-jqyoui-options ng-model="list2" jqyoui-droppable style='height:50px;'>
-  <div class="btn btn-success" data-drag="false" data-jqyoui-options ng-model="list2" jqyoui-draggable ng-hide="!list2.title">{{list2.title}}</div>
-</div>
+
+
+
+		<div class="row" ng-controller="MainCtrl">
+			<div class="col-xs-6">
+				<ul>
+					<li ui-draggable="true" drag="man"
+						drag-channel="customImage2"
+						drop-validate="dropValidateHandler($drop, $event, $data)"
+						drag-hover-class="on-drag-hover-custom"
+						drag-image-element-id="getCustomDragElementId($index)"
+						on-drop-success="dropSuccessHandler($event,$index,men)"
+						ui-on-drop="onDrop($event,$data,men,$index)"
+						drop-channel="customImage1"
+						ng-repeat="man in men track by $index">
+						{{man}}
+					</li>
+				</ul>
+			</div>
+			<div class="col-xs-6">
+				<ul>
+					<li ui-draggable="true" drag="woman"
+						drag-channel="customImage1"
+						drop-validate="dropValidateHandler($drop, $event, $data)"
+						drag-hover-class="on-drag-hover-custom"
+						drag-image-element-id="getCustomDragElementId($index)"
+						ui-on-drop="onDrop($event,$data,women,$index)"
+						drop-channel="customImage2"
+						on-drop-success="dropSuccessHandler($event,$index,women)"
+						ng-repeat="woman in women track by $index">
+						{{woman}}
+					</li>
+				</ul>
+			</div>
+		</div>
+
+
 		@endverbatim
 
 		{{-- TODO: Integrate angular into Laraview project instead of taking this shortcut --}}
