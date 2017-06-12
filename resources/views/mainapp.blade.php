@@ -111,7 +111,7 @@
 			</div>
 
 
-
+<!--
 		<div class="row" ng-controller="MainCtrl">
 			<div class="col-xs-6">
 				<ul>
@@ -144,6 +144,7 @@
 				</ul>
 			</div>
 		</div>
+-->
 
 
 		@endverbatim
