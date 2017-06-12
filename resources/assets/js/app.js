@@ -46,8 +46,7 @@ const app = new Vue({
 					var params = {
 						method: method,
 						url: action,
-						params: data || {},
-						cache: method != 'POST'
+						params: data || {}
 					};
 					if (method == 'POST') {
 						params.headers = {'Content-Type': 'application/x-www-form-urlencoded'}
