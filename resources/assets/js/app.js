@@ -125,7 +125,7 @@ const app = new Vue({
 
 			// Authenticate
 			$scope.login = function() {
-				API.get('/authenticate', 'POST' {username:vm.username, password:vm.password}).then(function(res) {
+				API.get('/authenticate', 'POST', {username:vm.username, password:vm.password}).then(function(res) {
 					if (res.data && res.data.isLoggedIn) {
 						_init();
 					}
