@@ -54,7 +54,7 @@ class CredlyAPI extends Controller {
 			}
 		}
 
-		return $action!='me/contacts' ? "https://api.credly.com/v1.1/$action?" . http_build_query($args) : response()->json($results);
+		return response()->json($results);
 	}
 
 
