@@ -30,6 +30,14 @@
 			.ui_column.contacts_column {
 				float: right;
 			}
+			.badge_image {
+				float: left;
+			}
+			.badge_title {
+				text-align: center;
+				font-weight: bold;
+				font-size: 16px;
+			}
 			.member_box {
 				position: relative;
 				float: left;
@@ -118,15 +126,12 @@
 						ng-class="{'loading': uiController.isLoading}"
 						>
 						<a
-							class="badge-image"
+							class="badge_image"
 							href="https://credly.com/recipients/{{ badge.id }}"
 							target="_blank"
 							ng-repeat="badge in uiController.badges">
-							<div class="clearfix" ng-if="$index % 3 == 0"></div>
-							<div class="col-xs-4">
-								<div>{{ badge.title }}</div>
+								<div class="badge_title">{{ badge.title }}</div>
 								<img ng-src="{{ badge.image_url | imageFilter: 13 }}" />
-							</div>
 						</a>
 						<div class="loader loader--style2" title="1" ng-show="uiController.isLoading">
 						  <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
