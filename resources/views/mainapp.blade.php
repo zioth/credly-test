@@ -90,7 +90,7 @@
 									<img
 										class="cbadge"
 										ng-src="{{ badge }}"
-										ng-title="{{ badge.title }} : {{ badge.short_description }}"
+										ng-attr-title="{{ badge.title }} : {{ badge.short_description }}"
 										ng-repeat="badge in uiController.memberBadges[contact.contact_member_id]"
 									/>
 								</div>
