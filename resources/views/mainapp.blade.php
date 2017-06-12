@@ -45,15 +45,11 @@
 							target="_blank"
 							ng-repeat="badge in uiController.badges"
 
-									ui-draggable="true" drag="badge"
-									drag-channel="badge"
-									drop-validate="dropValidateHandler($drop, $event, $data)"
-									drag-hover-class="on-drag-hover-custom"
-									drag-image-element-id="getCustomDragElementId(badge)"
-									on-drop-success="dropSuccessHandler($event, $badge)"
-									ui-on-drop="onDrop($event,$data,badge)"
-									drop-channel="badge"
-						   >
+							ui-draggable="true" drag="badge"
+							on-drop-success="dropSuccessHandler($event, $badge)"
+							drag-channel="badge"
+							drag-hover-class="on-drag-hover-custom"
+							drag-image-element-id="getCustomDragElementId(badge)">
 								<img ng-src="{{ badge.image_url | imageFilter: 13 }}" ng-attr-title="{{ badge.title }}"/>
 						</a>
 					</div>
@@ -66,7 +62,10 @@
 							class="member_box"
 							ng-class="{'is_member': contact.is_member}"
 							ng-repeat="contact in uiController.contacts"
-						>
+
+							ui-on-drop="onDrop($event,$data)"
+							drop-validate="dropValidateHandler($drop, $event, $data)"
+							drop-channel="badge">
 							<div ng-switch on="contact.is_member" >
 								<div ng-switch-when="true">
 									<img class="avatar" ng-src="{{ contact.member.avatar }}"/>
