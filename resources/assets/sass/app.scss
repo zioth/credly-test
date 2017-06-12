@@ -10,6 +10,7 @@
 
 .error {
 	color: #F00;
+	padding: 12px 0;
 }
 
 .app_title {
@@ -91,7 +92,7 @@
 	padding-left: 50%;
 	box-sizing: initial;
 }
-.login_form .form-actions .submit {
+.login_form .form-actions .btn {
 	width: 100%;
 	margin-top: 24px;
 }

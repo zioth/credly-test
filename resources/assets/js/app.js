@@ -189,6 +189,7 @@ const app = new Vue({
 				vm.memberBadges = {};
 				vm.getBadges();
 				vm.getContacts();
+				$scope.$apply();
 			}
 
 			_init();
