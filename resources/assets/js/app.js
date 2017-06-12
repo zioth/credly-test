@@ -61,9 +61,9 @@ const app = new Vue({
 		// Main controller
 		.controller('UIController', ['$scope', 'ApiRequest', function($scope, API) {
 			var vm = this;
-			var page = 1;
 
-			// This was copied from Alex's demo. I have not implemented it for this project, so it's here as a placeholder.
+			// This was copied from Alex's interview demo, but I did not have time to reimplement the infinite scroll code.
+			var page = 1;
 			$scope.$on('loadMoreBadges', function() {
 				vm.getBadges();
 			});
@@ -72,13 +72,16 @@ const app = new Vue({
 			 * Get the badges created by the logged-in user
 			 */
 			vm.getBadges = function() {
-				if ($scope.noMore) return;
+				if ($scope.noMore) {
+					return;
+				}
 
+				//TODO: Need seperate loading states for each action. Shared just results in a flickering UI
 				vm.isLoading = true;
 
-				API.get('/badges', 'GET', {
-					order_direction: 'DESC',
-					page: 1,
+				API.get('/me/badges/created', 'GET', {
+					order_direction: 'ASC',
+					page: page,
 					per_page: 20
 				}).then(
 					function(res) {
@@ -97,12 +100,15 @@ const app = new Vue({
 				);
 			};
 
-			// Get the logged-in user's contacts
+			/**
+			 * Get the logged-in user's contacts
+			 */
 			vm.getContacts = function() {
-				// TODO: loading state
-				API.get('/contacts', 'GET', {
-					order_direction: 'DESC',
-					page: 1,
+				vm.isLoading = true;
+
+				API.get('/me/contacts', 'GET', {
+					order_direction: 'ASC',
+					page: page,
 					per_page: 20
 				}).then(
 					function(res) {
@@ -121,8 +127,30 @@ const app = new Vue({
 				);
 			};
 
+			/**
+			 * Get all badges for a member
+			 */
 			vm.showBadges = function(memberid) {
-				console.error(memberid);
+				//TODO: Add a loading state
+
+				API.get('/members/' + memberid + '/badges', 'GET', {
+					order_direction: 'ASC',
+					page: 1,
+					per_page: 10
+				}).then(
+					function(res) {
+						vm.isLoggedIn = !res.data || !res.data.meta || res.data.meta.status_code != 401;
+						if (res.data.data) {
+							vm.contacts = vm.contacts.concat(res.data.data);
+						}
+						if (res.data && res.data.paging) {
+							$scope.noMore = vm.contacts.length >= res.data.paging.total_results;
+						}
+					},
+					function(err) {
+						vm.isLoading = false;
+					}
+				);
 			};
 
 			// Authenticate

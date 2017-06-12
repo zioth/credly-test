@@ -10,18 +10,21 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+use App\Http\Controllers;
 
 Route::get('/', function () {
 	return view('mainapp');
 });
 
-Route::get('/badges', function(App\Http\Controllers\CredlyAPI $api) {
+Route::get('/me/badges/created', function(CredlyAPI $api) {
 	return $api->proxy('me/badges/created');
 });
-Route::get('/contacts', function(App\Http\Controllers\CredlyAPI $api) {
+Route::get('/me/contacts', function(CredlyAPI $api) {
 	return $api->proxy('me/contacts');
 });
-
-Route::post('/authenticate', function(App\Http\Controllers\CredlyAPI $api) {
+Route::get('//members/{id}/badges', function($id, CredlyAPI $api) {
+	return $api->proxy('me/contacts');
+});
+Route::post('/authenticate', function(CredlyAPI $api) {
 	return $api->authenticate();
 });
