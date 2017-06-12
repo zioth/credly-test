@@ -69,9 +69,8 @@ const app = new Vue({
 		vm.getContacts = _getContacts.bind(vm, API);
 		vm.showBadges = _showBadges.bind(vm, API);
 		$scope.login = _login.bind(vm, API);
-
-		$scope.onDrop = function(badge, contact) {
-			_giveBadge.bind(vm, API, contact.member.id, badge)();
+		$scope.onDropBadge = function(badge, contact) {
+			_giveBadge.bind(vm, API, contact.member ? contact.member.id : contact.id, badge)();
 		};
 
 		_init(vm);

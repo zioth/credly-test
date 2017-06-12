@@ -61,7 +61,7 @@
 							ng-class="{'is_member': contact.is_member}"
 							ng-repeat="contact in uiController.contacts"
 
-							ui-on-drop="onDrop($data, contact)"
+							ui-on-drop="onDropBadge($data, contact)"
 							drop-channel="badge">
 							<div ng-switch on="contact.is_member" >
 								<div ng-switch-when="true">
