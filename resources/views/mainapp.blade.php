@@ -15,7 +15,8 @@
 	<body ng-controller="UIController as uiController">
 		{{-- verbatim to allow Angular interpolation --}}
 		@verbatim
-			<div class="login-form" ng-class="{'loggedIn': uiController.isLoggedIn}">
+			<div class="app_title">Eli's Credly App</div>
+			<div class="login_form" ng-class="{'loggedIn': uiController.isLoggedIn}">
 				<!-- TODO: If made one attempt and failed, err -->
 				<form name="form" ng-submit="login()" role="form">
 					<div class="form-group">
@@ -34,7 +35,7 @@
 					</div>
 				</form>
 			</div>
-			<div class="main-wrapper container" ng-class="{'loggedIn': uiController.isLoggedIn}">
+			<div class="main_wrapper container" ng-class="{'loggedIn': uiController.isLoggedIn}">
 				<div class="columns">
 					<div
 						class="badges_column ui_column"

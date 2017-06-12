@@ -8,6 +8,13 @@
 // Bootstrap
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
 
+.app_title {
+	font-size: 24px;
+	text-align: center;
+	font-weight: bold;
+	padding: 6px 0 12px;
+}
+
 .columns {
 	display: -ms-flex;
 	display: -webkit-flex;
@@ -70,9 +77,13 @@
 	top: 0;
 }
 
-.main-wrapper:not(.loggedIn),
-.login-form.loggedIn {
+.main_wrapper:not(.loggedIn),
+.login_form.loggedIn {
 	display: none;
+}
+.login_form {
+	padding: 24px;
+	max-width: 400px;
 }
 
 .show_badges {
