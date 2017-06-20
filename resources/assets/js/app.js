@@ -218,7 +218,7 @@
 				vm.isLoggedIn = !res.data || !res.data.meta || res.data.meta.status_code != 401;
 				if (vm.isLoggedIn) {
 					var obj = vm.memberBadges[memberid];
-					if (res.data.data && res.data.data.length) {
+					//if (res.data.data && res.data.data.length) {
 						if (obj) {
 							//TODO: Error handling
 							//TODO: res.data.data[0].badge is the member's first badge, not the one just added.
@@ -230,7 +230,7 @@
 									_addIt(vm.memberBadges[memberid], badge);
 								});
 						}
-					}
+					//}
 				}
 			},
 			function(err) {
