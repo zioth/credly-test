@@ -21,7 +21,7 @@ class CredlyAPI extends Controller {
 		// TODO: Optimize: If there's no cookie, many requests will fail.
 		$args['access_token'] = Cookie::get('credly_token');
 
-		$curl = $this->setupCurl("https://api.credly.com/v1.1/$action?" . http_build_query($args), 'GET');
+		$curl = $this->setupCurl("https://api.credly.com/v1.1/$action?" . http_build_query($args), $request->method());
 
 		$curl_response = curl_exec($curl);
 		$err = curl_error($curl);
